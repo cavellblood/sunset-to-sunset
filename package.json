@@ -4,5 +4,11 @@
   "description": "",
   "main": "index.js",
   "keywords": [],
-  "author": "Cavell Blood"
+  "author": "Cavell Blood",
+  "devDependencies": {
+    "@types/luxon": "^2.0.4"
+  },
+  "dependencies": {
+    "luxon": "^2.0.2"
+  }
 }
