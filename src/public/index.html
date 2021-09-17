@@ -9,17 +9,27 @@
 
 <body>
 	<div id="app"></div>
-	<script type="module">
-
-		import { SunsetToSunset } from '../js/main.js'
-
-		SunsetToSunset({
-			location: {
-				lat: 35.750413,
-				long: -87.229406
+	<script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js"></script>
+	<script type="module" src="../js/main.js"></script>
+	<template id="sts-settings" data-settings='{
+			"location": {
+				"lat": 35.750413,
+				"long": -87.229406
 			}
-		});
-	</script>
+		}'>
+	</template>
+	<template id="sts-banner">
+		<div>
+			Everything in here will be the message
+		</div>
+	</template>
+	<template id="sts-message">
+		<div>
+			Everything in here will be the message
+		</div>
+	</template>
+
+
 </body>
 
 </html>

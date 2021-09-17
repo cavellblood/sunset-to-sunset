@@ -1,10 +1,8 @@
-import { DateTime, Duration } from "luxon";
-
 const extend = (a, b) => {
 	return Object.assign(a, b)
 }
 
-export const SunsetToSunset = (options) => {
+const SunsetToSunset = (() => {
 
 	console.log(`Intializing Sunset to Sunset...`);
 	
@@ -23,16 +21,23 @@ export const SunsetToSunset = (options) => {
 			long: 0
 		}
 	}
+
+	// Get options set in HTML
+	const stsContainer = document.querySelector('template#sts-settings')
+	let options = stsContainer != null ? JSON.parse(stsContainer.dataset.settings) : {}
 	
 	// Merge options with defaults
 	options = extend(extend({}, defaults), options)
+
+	const DateTime = luxon.DateTime
+	const Duration = luxon.Duration
 
 	const now = DateTime.now()
 	const today = now.toString()
 	
 	// Set day of week: zero-based index
 	const closingDayNumber = 4
-	const openingDayNumber = 6
+	const openingDayNumber = 5
 	
 	// Get location coordinates
 	const getLocation = () => {
@@ -44,32 +49,33 @@ export const SunsetToSunset = (options) => {
 		const sunsetDate = date.split('T')[0]
 		const response = await fetch('https://api.sunrise-sunset.org/json?&lat=' + getLocation().lat + '&lng=' + getLocation().long + '&date=' + sunsetDate + '&formatted=0')
 		const data = await response.json();
+		const sunset = DateTime.fromISO(data.results.sunset)
 
-		return data.results.sunset
+		return sunset
 	}
 	
-	// Get closing time
-	const getClosingTime = () => {
+	// Get closing sunset
+	const getClosingSunset = () => {
 		const daysToClosing = closingDayNumber - now.weekday
 		const closingDate = DateTime.fromISO(now.plus({
 			days: daysToClosing
 		})).toString()
 
-		const closingTime = getSunsetTime(closingDate);
+		const closingSunset = getSunsetTime(closingDate);
 
-		return closingTime
+		return closingSunset
 	}
 
-	// Get opening time
-	const getOpeningTime = () => {
+	// Get opening sunset
+	const getOpeningSunset = () => {
 		const daysToOpening = openingDayNumber - now.weekday
 		const openingDate = DateTime.fromISO(now.plus({
 			days: daysToOpening
 		})).toString()
 
-		const openingTime = getSunsetTime(openingDate);
+		const openingSunset = getSunsetTime(openingDate);
 
-		return openingTime
+		return openingSunset
 	}
 	
 	// Get message minutes
@@ -89,15 +95,16 @@ export const SunsetToSunset = (options) => {
 		return DateTime.fromISO(date).minus(getMessageDuration())
 	}
 	
+	// Get guard time. `date` is a Luxon DateTime object.
 	const getGuardTime = (date, action) => {
 		let time
 		
 		if (action == 'closing') {
-			time = DateTime.fromISO(date).minus({ minutes: getGuardMinutes() })
+			time = date.minus({ minutes: getGuardMinutes() })
 		}
 		
 		if (action == 'opening') {
-			time = DateTime.fromISO(date).plus({ minutes: getGuardMinutes() })
+			time = date.plus({ minutes: getGuardMinutes() })
 		}
 		
 		return time
@@ -105,8 +112,8 @@ export const SunsetToSunset = (options) => {
 	
 	const getTimes = async () => {
 		const allTimes = Promise.all([
-			getClosingTime(),
-			getOpeningTime()
+			getClosingSunset(),
+			getOpeningSunset()
 		])
 		
 		const times = await allTimes
@@ -114,13 +121,13 @@ export const SunsetToSunset = (options) => {
 		return times
 	}
 	
-	// Only run if today is closing day
-	if ( now.weekday == closingDayNumber ) {
-		getTimes().then(([closingTime, openingTime]) => {
+	// Only run if today is Friday or Sabbath
+	if ( now.weekday == closingDayNumber || now.weekday == openingDayNumber ) {
+		getTimes().then(([closingSunset, openingSunset]) => {
 			
 			// Set guard times
-			const closing = getGuardTime(closingTime, 'closing')
-			const opening = getGuardTime(openingTime, 'opening')
+			const closing = getGuardTime(closingSunset, 'closing')
+			const opening = getGuardTime(openingSunset, 'opening')
 			
 			// Check times
 
@@ -136,16 +143,19 @@ export const SunsetToSunset = (options) => {
 			// Is it after sundown on Saturday?
 			const afterSabbath = now > opening && now >= openingDayNumber
 
-			console.log(`during week: ${duringWeek}`)
-			console.log(`show banner: ${showBanner}`)
-			console.log(`during sabbath: ${duringSabbath}`)
-			console.log(`after sabbath: ${afterSabbath}`)
+			console.log(`Closing Sunset: ${closingSunset.toLocaleString(DateTime.DATETIME_FULL)}`)
+			console.log(`Opening Sunset: ${openingSunset.toLocaleString(DateTime.DATETIME_FULL)}`)
+			console.log(`Closing guard: ${closing.toLocaleString(DateTime.DATETIME_FULL)}`)
+			console.log(`Opening guard: ${opening.toLocaleString(DateTime.DATETIME_FULL)}`)
+
+			console.log(`During the week: ${duringWeek}`)
+			console.log(`Show banner: ${showBanner}`)
+			console.log(`During the Sabbath: ${duringSabbath}`)
+			console.log(`After Sabbath: ${afterSabbath}`)
 		})
+	} else {
+		console.log('Sunset to Sunset: Exiting because today is not closing day')
 	}
 
 	return options
-};
-
-export const sayHello = (phrase) => {
-	console.log(phrase)
-}
+})()
