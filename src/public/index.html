@@ -24,7 +24,13 @@
 	</template>
 	<template id="sts-banner">
 		<div>
-			Banner message here
+			Our store will be closing at
+			<span class="sts-closing-time" data-format-custom='{ 
+					"hour": "numeric",
+					"minute": "numeric",
+					"timeZoneName": "short"
+				}'></span> and
+			open <span class="sts-opening-time" data-format-custom='{ "hour": "numeric" }'></span>
 		</div>
 	</template>
 	<template id="sts-message">

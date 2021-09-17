@@ -29,11 +29,28 @@ const SunsetToSunset = (() => {
 	// Merge options with defaults
 	options = extend(extend({}, defaults), options)
 
+	const insertBanner = (closing, opening) => {
+		const body = document.querySelector('body');
+		
+		const template = document.querySelector('template#sts-banner')
+		const clone = template.content.cloneNode(true)
+
+		const closingElement = clone.querySelector('.sts-closing-time')
+		const closingFormat = closingElement.dataset.formatCustom ? JSON.parse(closingElement.dataset.formatCustom) : closingElement.dataset.formatPreset
+		closingElement.textContent = closing.toLocaleString(closingFormat)
+		
+		const openingElement = clone.querySelector('.sts-opening-time')
+		const openingFormat = openingElement.dataset.formatCustom ? JSON.parse(openingElement.dataset.formatCustom) : openingElement.dataset.formatPreset
+		openingElement.textContent = opening.toLocaleString(openingFormat)
+
+		body.insertBefore(clone, null)
+	}
+
 	const DateTime = luxon.DateTime
 	const Duration = luxon.Duration
 
 	const now = DateTime.now()
-	console.log(now.toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS))
+	console.log(`now: ${now.toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}`)
 	
 	// Set day of week: zero-based index
 	const closingDayNumber = 5
@@ -172,10 +189,10 @@ const SunsetToSunset = (() => {
 			if (bannerUp) {
 				console.log('time to show the banner')
 
+				insertBanner(closing, opening)
+
 				// Refresh the page when it's closing time.
 				const refreshTime = closing.diff(now, 'milliseconds').toObject();
-
-				console.log(refreshTime)
 
 				if (now < closing) {
 					setTimeout(() => {
