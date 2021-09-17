@@ -33,11 +33,11 @@ const SunsetToSunset = (() => {
 	const Duration = luxon.Duration
 
 	const now = DateTime.now()
-	const today = now.toString()
+	console.log(now.toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS))
 	
 	// Set day of week: zero-based index
-	const closingDayNumber = 4
-	const openingDayNumber = 5
+	const closingDayNumber = 5
+	const openingDayNumber = 6
 	
 	// Get location coordinates
 	const getLocation = () => {
@@ -92,7 +92,7 @@ const SunsetToSunset = (() => {
 	
 	//Get message time
 	const getMessageTime = (date) => {
-		return DateTime.fromISO(date).minus(getMessageDuration())
+		return date.minus(getMessageDuration())
 	}
 	
 	// Get guard time. `date` is a Luxon DateTime object.
@@ -131,27 +131,62 @@ const SunsetToSunset = (() => {
 			
 			// Check times
 
-			// Is is during the week before closing time?
-			const duringWeek = now < closing
+			// Is is during the week before the time to show the banner?
+			const beforeBanner = now < getMessageTime(closing)
 
 			// Is it before closing time but the banner should be up?
-			const showBanner = now < closing && now > getMessageTime
+			const bannerUp = now < closing && now > getMessageTime(closing)
 			
 			// Is it during the sabbath?
 			const duringSabbath = now >= closing && now <= opening && now.weekday >= closingDayNumber
 			
 			// Is it after sundown on Saturday?
 			const afterSabbath = now > opening && now >= openingDayNumber
+			
+			console.log(`Banner time: ${getMessageTime(closing).toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}`)
 
-			console.log(`Closing Sunset: ${closingSunset.toLocaleString(DateTime.DATETIME_FULL)}`)
-			console.log(`Opening Sunset: ${openingSunset.toLocaleString(DateTime.DATETIME_FULL)}`)
-			console.log(`Closing guard: ${closing.toLocaleString(DateTime.DATETIME_FULL)}`)
-			console.log(`Opening guard: ${opening.toLocaleString(DateTime.DATETIME_FULL)}`)
+			console.log(`Closing guard: ${closing.toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}`)
+			console.log(`Closing Sunset: ${closingSunset.toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}`)
 
-			console.log(`During the week: ${duringWeek}`)
-			console.log(`Show banner: ${showBanner}`)
+			console.log(`Opening Sunset: ${openingSunset.toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}`)
+			console.log(`Opening guard: ${opening.toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}`)
+
+			console.log(`Before banner: ${beforeBanner}`)
+			console.log(`Banner up: ${bannerUp}`)
 			console.log(`During the Sabbath: ${duringSabbath}`)
 			console.log(`After Sabbath: ${afterSabbath}`)
+
+			if (beforeBanner) {
+				console.log(`During the week.`)
+
+				// Refresh the page when it's time to show the banner.
+				const refreshTime = getMessageTime(closing).diff(now, 'milliseconds').toObject();
+
+				if (now < getMessageTime(closing)) {
+					setTimeout(() => {
+						location.reload()
+					}, refreshTime.milliseconds);
+				}
+			}
+
+			if (bannerUp) {
+				console.log('time to show the banner')
+
+				// Refresh the page when it's closing time.
+				const refreshTime = closing.diff(now, 'milliseconds').toObject();
+
+				console.log(refreshTime)
+
+				if (now < closing) {
+					setTimeout(() => {
+						location.reload()
+					}, refreshTime.milliseconds);
+				}
+			}
+
+			if (duringSabbath) {
+
+			}
 		})
 	} else {
 		console.log('Sunset to Sunset: Exiting because today is not closing day')
