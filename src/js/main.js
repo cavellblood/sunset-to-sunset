@@ -85,9 +85,9 @@ const SunsetToSunset = (() => {
 		return duration
 	}
 	
-	// Get guart minutes
-	const getGuardMinutes = () => {
-		return options.guardMinutes
+	// Get guard duration
+	const getGuardDuration = () => {
+		return options.guardDuration
 	}
 	
 	//Get message time
@@ -100,11 +100,11 @@ const SunsetToSunset = (() => {
 		let time
 		
 		if (action == 'closing') {
-			time = date.minus({ minutes: getGuardMinutes() })
+			time = date.minus(getGuardDuration())
 		}
 		
 		if (action == 'opening') {
-			time = date.plus({ minutes: getGuardMinutes() })
+			time = date.plus(getGuardDuration())
 		}
 		
 		return time
