@@ -1,8 +1,10 @@
+import { DateTime, Duration } from "luxon";
+
 const extend = (a, b) => {
 	return Object.assign(a, b)
 }
 
-const SunsetToSunset = (options) => {
+export const SunsetToSunset = (options) => {
 
 	console.log(`Intializing Sunset to Sunset...`);
 	
@@ -24,9 +26,6 @@ const SunsetToSunset = (options) => {
 	
 	// Merge options with defaults
 	options = extend(extend({}, defaults), options)
-	
-	const DateTime = luxon.DateTime;
-	const Duration = luxon.Duration;
 
 	const now = DateTime.now()
 	const today = now.toString()
@@ -126,7 +125,7 @@ const SunsetToSunset = (options) => {
 			// Check times
 
 			// Is is during the week before closing time?
-			const duringWeek    = now < closing
+			const duringWeek = now < closing
 
 			// Is it before closing time but the banner should be up?
 			const showBanner = now < closing && now > getMessageTime
@@ -137,23 +136,16 @@ const SunsetToSunset = (options) => {
 			// Is it after sundown on Saturday?
 			const afterSabbath = now > opening && now >= openingDayNumber
 
-			console.log(now.toString())
-			console.log(getMessageTime(closing).toString())
-			console.log(duringWeek)
-			console.log(showBanner)
-			console.log(duringSabbath)
-			console.log(afterSabbath)
+			console.log(`during week: ${duringWeek}`)
+			console.log(`show banner: ${showBanner}`)
+			console.log(`during sabbath: ${duringSabbath}`)
+			console.log(`after sabbath: ${afterSabbath}`)
 		})
 	}
-	
+
+	return options
+};
+
+export const sayHello = (phrase) => {
+	console.log(phrase)
 }
-
-
-SunsetToSunset({
-	location: {
-		lat: 35.750413,
-		long: -87.229406
-	},
-	messageMinutes: 5 * 60
-})
-
