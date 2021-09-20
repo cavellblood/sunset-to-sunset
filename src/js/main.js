@@ -2,6 +2,53 @@ const extend = (a, b) => {
 	return Object.assign(a, b)
 }
 
+const renderBanner = (closing, opening) => {
+	const userDefinedTemplate = document.querySelector('template#sts-banner')
+
+	let template
+	
+	if (userDefinedTemplate) {
+		template = userDefinedTemplate
+	} else {
+		let defaultBannerTemplate = document.createElement("template")
+		
+		defaultBannerTemplate.innerHTML = `
+			<div>
+				Because of religious beliefs our store will be closed over the Sabbath hours.
+				<span class="sts-closing-time"></span> and
+				open <span class="sts-opening-time"></span>.
+			</div>
+		`
+		template = defaultBannerTemplate
+	}
+
+	const banner = template.content.cloneNode(true)
+
+	const defaultFormats = {
+		closing: { 
+			"hour": "numeric",
+			"minute": "numeric",
+			"timeZoneName": "short"
+		},
+		opening: { 
+			"hour": "numeric",
+			"minute": "numeric",
+			"timeZoneName": "short"
+		}
+	}
+
+	const closingElement = banner.querySelector('.sts-closing-time')
+	const closingFormat = closingElement.dataset.format ? JSON.parse(closingElement.dataset.format) : defaultFormats.closing
+	closingElement.textContent = closing.toLocaleString(closingFormat)
+	
+	const openingElement = banner.querySelector('.sts-opening-time')
+	const openingFormat = openingElement.dataset.format ? JSON.parse(openingElement.dataset.format) : defaultFormats.opening
+	openingElement.textContent = opening.toLocaleString(openingFormat)
+	
+	const body = document.querySelector('body');
+	body.insertBefore(banner, null)
+}
+
 const SunsetToSunset = (() => {
 
 	console.log(`Intializing Sunset to Sunset...`);
@@ -28,23 +75,6 @@ const SunsetToSunset = (() => {
 	
 	// Merge options with defaults
 	options = extend(extend({}, defaults), options)
-
-	const renderBanner = (closing, opening) => {
-		const body = document.querySelector('body');
-		
-		const template = document.querySelector('template#sts-banner')
-		const clone = template.content.cloneNode(true)
-
-		const closingElement = clone.querySelector('.sts-closing-time')
-		const closingFormat = closingElement.dataset.formatCustom ? JSON.parse(closingElement.dataset.formatCustom) : closingElement.dataset.formatPreset
-		closingElement.textContent = closing.toLocaleString(closingFormat)
-		
-		const openingElement = clone.querySelector('.sts-opening-time')
-		const openingFormat = openingElement.dataset.formatCustom ? JSON.parse(openingElement.dataset.formatCustom) : openingElement.dataset.formatPreset
-		openingElement.textContent = opening.toLocaleString(openingFormat)
-
-		body.insertBefore(clone, null)
-	}
 
 	const DateTime = luxon.DateTime
 	const Duration = luxon.Duration
