@@ -16,7 +16,7 @@ export default ({ command }) => ({
 			},
 			output: {
 				sourcemap: true,
-				entryFileNames: `assets/[name].js`,
+				entryFileNames: `assets/[name].min.js`,
 				chunkFileNames: `assets/[name].js`,
 				assetFileNames: `assets/[name].[ext]`
 			},
