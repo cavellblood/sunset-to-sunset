@@ -202,7 +202,15 @@ const SunsetToSunset = (() => {
 	
 	// Get closing sunset
 	const getClosingSunset = () => {
-		const daysToClosing = closingDayNumber - now.weekday
+		let daysToClosing
+
+		
+		if (options.simulateTime) {
+			daysToClosing = 0
+		} else {
+			daysToClosing = closingDayNumber - now.weekday
+		}
+
 		const closingDate = DateTime.fromISO(now.plus({
 			days: daysToClosing
 		})).toString()
@@ -214,7 +222,14 @@ const SunsetToSunset = (() => {
 
 	// Get opening sunset
 	const getOpeningSunset = () => {
-		const daysToOpening = openingDayNumber - now.weekday
+		let daysToOpening
+
+		if (options.simulateTime) {
+			daysToOpening = 1
+		} else {
+			daysToOpening = openingDayNumber - now.weekday
+		}
+
 		const openingDate = DateTime.fromISO(now.plus({
 			days: daysToOpening
 		})).toString()
