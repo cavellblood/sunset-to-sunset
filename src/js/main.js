@@ -283,14 +283,14 @@ const SunsetToSunset = (() => {
 	}
 	
 	// Only run if today is Friday or Sabbath
-	if ( activateSunsetWatch ) {
+	if ( activateSunsetWatch || options.simulateTime) {
 		getTimes().then(([closingSunset, openingSunset]) => {
 			
 			// Set guard times
 			const closing = getGuardTime(closingSunset, 'closing')
 			const opening = getGuardTime(openingSunset, 'opening')
 
-			let duringTheWeek = false
+			let preparationDay = false
 			let bannerUp = false
 			let duringSabbath = false
 			let afterSabbath = false
@@ -298,8 +298,8 @@ const SunsetToSunset = (() => {
 			// Check if we are simulating the time
 			if (options.simulateTime) {
 				switch (options.simulateTime) {
-					case 'during-the-week':
-						duringTheWeek = true
+					case 'preparation-day':
+						preparationDay = true
 						break;
 
 					case 'banner-up':
@@ -318,14 +318,14 @@ const SunsetToSunset = (() => {
 						break;
 				}
 			} else {
-				duringTheWeek = now < getMessageTime(closing)
+				preparationDay = now < getMessageTime(closing)
 				bannerUp = now < closing && now > getMessageTime(closing)
 				duringSabbath = now >= closing && now <= opening && now.weekday >= closingDayNumber
 				afterSabbath = now > opening && now >= openingDayNumber
 			}
 		
 			// Is is during the week before the time to show the banner?
-			if (duringTheWeek) {
+			if (preparationDay) {
 				// Refresh the page when it's time to show the banner.
 				const refreshTime = getMessageTime(closing).diff(now, 'milliseconds').toObject();
 
@@ -370,7 +370,7 @@ const SunsetToSunset = (() => {
 
 				let checks = {
 					Enabled: {
-						"During the week": duringTheWeek,
+						"Preparation day": preparationDay,
 						"Banner up": bannerUp,
 						"During the Sabbath": duringSabbath,
 						"After Sabbath": afterSabbath
