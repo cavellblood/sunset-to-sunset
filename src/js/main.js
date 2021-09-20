@@ -329,9 +329,14 @@ const SunsetToSunset = (() => {
 				// Refresh the page when it's time to show the banner.
 				const refreshTime = getMessageTime(closing).diff(now, 'milliseconds').toObject();
 
-				setTimeout(() => {
-					location.reload()
-				}, refreshTime.milliseconds);
+				// Don't refresh if there is a negative refresh time.
+				// This conditional is mainly here for when `simulateTime`
+				// is set to `preparation-day`.
+				if (refreshTime.milliseconds >= 0) {
+					setTimeout(() => {
+						location.reload()
+					}, refreshTime.milliseconds);
+				}
 			}
 
 			// Is it before closing time but the banner should be up?
@@ -340,10 +345,15 @@ const SunsetToSunset = (() => {
 
 				// Refresh the page when it's closing time.
 				const refreshTime = closing.diff(now, 'milliseconds').toObject();
-
-				setTimeout(() => {
-					location.reload()
-				}, refreshTime.milliseconds);
+				
+				// Don't refresh if there is a negative refresh time.
+				// This conditional is mainly here for when `simulateTime`
+				// is set to `banner-up`.
+				if (refreshTime.milliseconds >= 0) {
+					setTimeout(() => {
+						location.reload()
+					}, refreshTime.milliseconds);
+				}
 			}
 
 			// Is it during the sabbath?
@@ -353,9 +363,11 @@ const SunsetToSunset = (() => {
 				// Refresh the page when it's opening time.
 				const refreshTime = opening.diff(now, 'milliseconds').toObject();
 
-				setTimeout(() => {
-					location.reload()
-				}, refreshTime.milliseconds);
+				if (refreshTime.milliseconds >= 0) {
+					setTimeout(() => {
+						location.reload()
+					}, refreshTime.milliseconds);
+				}
 			}
 
 			// Is it after sundown on Saturday?
