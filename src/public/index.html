@@ -5,24 +5,26 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Sunset to Sunset Test</title>
+	<script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js"></script>
+	<script type="module" src="../js/main.js"></script>
 </head>
 
 <body>
-	<div id="app"></div>
-	<script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js"></script>
-	<script type="module" src="../js/main.js"></script>
+	<div id="app">
+		<div>Existing site content here</div>
+	</div>
 	<template id="sts-settings" data-settings='{
 			"location": {
 				"lat": 35.750413,
 				"long": -87.229406
 			},
 			"messageDuration": {
-				"hours": 4,
+				"hours": 7,
 				"minutes": 35
 			}
 		}'>
 	</template>
-	<template id="sts-banner">
+	<template id="sts-banner-templates">
 		<div>
 			Our store will be closing at
 			<ul>
@@ -74,7 +76,7 @@
 			</ul>
 		</div>
 	</template>
-	<template id="sts-message">
+	<template id="sts-message-template">
 		<div>
 			Sabbath message here
 		</div>
