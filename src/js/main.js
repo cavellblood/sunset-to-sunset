@@ -69,6 +69,8 @@ const SunsetToSunset = (() => {
 		}
 	}
 
+	let times = []
+
 	// Get options set in HTML
 	const stsContainer = document.querySelector('template#sts-settings')
 	let options = stsContainer != null ? JSON.parse(stsContainer.dataset.settings) : {}
@@ -80,7 +82,12 @@ const SunsetToSunset = (() => {
 	const Duration = luxon.Duration
 
 	const now = DateTime.now()
-	console.log(`now: ${now.toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}`)
+
+	times.push({
+		'Action': 'Current time',
+		'Date': now.toLocaleString(DateTime.DATE_FULL),
+		'Time': now.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
+	})
 	
 	// Set day of week: zero-based index
 	const closingDayNumber = 5
@@ -189,11 +196,9 @@ const SunsetToSunset = (() => {
 			
 			// Is it after sundown on Saturday?
 			const afterSabbath = now > opening && now >= openingDayNumber
-
-			let times = []
 			
 			times.push({
-				'Action': 'Banner Up',
+				'Action': 'Banner up',
 				'Date': getMessageTime(closing).toLocaleString(DateTime.DATE_FULL),
 				'Time': getMessageTime(closing).toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
 			})
