@@ -159,19 +159,61 @@ const SunsetToSunset = (() => {
 			
 			// Is it after sundown on Saturday?
 			const afterSabbath = now > opening && now >= openingDayNumber
+
+			let times = []
 			
-			console.log(`Banner time: ${getMessageTime(closing).toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}`)
+			times.push({
+				'Action': 'Banner Up',
+				'Date': getMessageTime(closing).toLocaleString(DateTime.DATE_FULL),
+				'Time': getMessageTime(closing).toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
+			})
 
-			console.log(`Closing guard: ${closing.toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}`)
-			console.log(`Closing Sunset: ${closingSunset.toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}`)
+			times.push({
+				'Action': 'Closing guard',
+				'Date': closing.toLocaleString(DateTime.DATE_FULL),
+				'Time': closing.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
+			})
 
-			console.log(`Opening Sunset: ${openingSunset.toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}`)
-			console.log(`Opening guard: ${opening.toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}`)
+			times.push({
+				'Action': 'Closing sunset',
+				'Date': closingSunset.toLocaleString(DateTime.DATE_FULL),
+				'Time': closingSunset.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
+			})
 
-			console.log(`Before banner: ${beforeBanner}`)
-			console.log(`Banner up: ${bannerUp}`)
-			console.log(`During the Sabbath: ${duringSabbath}`)
-			console.log(`After Sabbath: ${afterSabbath}`)
+			times.push({
+				'Action': 'Opening sunset',
+				'Date': openingSunset.toLocaleString(DateTime.DATE_FULL),
+				'Time': openingSunset.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
+			})
+
+			times.push({
+				'Action': 'Opening guard',
+				'Date': opening.toLocaleString(DateTime.DATE_FULL),
+				'Time': opening.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
+			})
+
+			console.table(times)
+
+			let checks = []
+
+			checks.push({ 
+				"key": 'Before banner',
+			 	"value": beforeBanner
+			})
+			checks.push({ 
+				"key": 'Banner up',
+			 	"value": bannerUp
+			})
+			checks.push({ 
+				"key": 'During the Sabbath',
+			 	"value": duringSabbath
+			})
+			checks.push({ 
+				"key": 'After Sabbath',
+			 	"value": afterSabbath
+			})
+
+			console.table(checks)
 
 			if (beforeBanner) {
 				console.log(`During the week.`)
