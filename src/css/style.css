@@ -1,0 +1,12 @@
+.sts-banner {
+	@apply bg-yellow-500;
+	@apply relative;
+	@apply p-3;
+	@apply text-center;
+	@apply font-sans;
+
+	& .sts-closing-time,
+	& .sts-opening-time {
+		@apply font-semibold;
+	}
+}

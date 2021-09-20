@@ -1,9 +1,11 @@
+import '../css/style.css'
+
 const extend = (a, b) => {
 	return Object.assign(a, b)
 }
 
 const renderBanner = (closing, opening) => {
-	const userDefinedTemplate = document.querySelector('template#sts-banner')
+	const userDefinedTemplate = document.querySelector('template#sts-banner-template')
 
 	let template
 	
@@ -13,7 +15,7 @@ const renderBanner = (closing, opening) => {
 		let defaultBannerTemplate = document.createElement("template")
 		
 		defaultBannerTemplate.innerHTML = `
-			<div>
+			<div class="sts-banner">
 				Because of religious beliefs our store will be closed over the Sabbath hours.
 				Closing on <span class="sts-closing-time"></span> and will re-open on <span class="sts-opening-time"></span>.
 			</div>
@@ -110,8 +112,8 @@ const SunsetToSunset = (() => {
 	})
 	
 	// Set day of week: zero-based index
-	const closingDayNumber = 5
-	const openingDayNumber = 6
+	const closingDayNumber = 1
+	const openingDayNumber = 2
 	
 	// Get location coordinates
 	const getLocation = () => {
