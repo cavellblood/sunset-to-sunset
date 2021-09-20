@@ -12,10 +12,13 @@ export default ({ command }) => ({
 		rollupOptions: {
 			input: {
 				"sunset-to-sunset": "./src/js/main.js",
-        index: "./src/public/index.html"
+				index: "./src/public/index.html"
 			},
 			output: {
 				sourcemap: true,
+				entryFileNames: `assets/[name].js`,
+				chunkFileNames: `assets/[name].js`,
+				assetFileNames: `assets/[name].[ext]`
 			},
 		},
 	},
