@@ -29,7 +29,7 @@ const SunsetToSunset = (() => {
 	// Merge options with defaults
 	options = extend(extend({}, defaults), options)
 
-	const insertBanner = (closing, opening) => {
+	const renderBanner = (closing, opening) => {
 		const body = document.querySelector('body');
 		
 		const template = document.querySelector('template#sts-banner')
@@ -189,7 +189,7 @@ const SunsetToSunset = (() => {
 			if (bannerUp) {
 				console.log('time to show the banner')
 
-				insertBanner(closing, opening)
+				renderBanner(closing, opening)
 
 				// Refresh the page when it's closing time.
 				const refreshTime = closing.diff(now, 'milliseconds').toObject();
