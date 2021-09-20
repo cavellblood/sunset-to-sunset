@@ -15,8 +15,7 @@ const renderBanner = (closing, opening) => {
 		defaultBannerTemplate.innerHTML = `
 			<div>
 				Because of religious beliefs our store will be closed over the Sabbath hours.
-				<span class="sts-closing-time"></span> and
-				open <span class="sts-opening-time"></span>.
+				Closing on <span class="sts-closing-time"></span> and will re-open on <span class="sts-opening-time"></span>.
 			</div>
 		`
 		template = defaultBannerTemplate
@@ -24,29 +23,50 @@ const renderBanner = (closing, opening) => {
 
 	const banner = template.content.cloneNode(true)
 
+	// Find all closing elements and add formatted times
+	const closingElements = banner.querySelectorAll('.sts-closing-time')
+	formatTimes(closingElements, closing)
+
+	// Find all opening elements and add formatted times
+	const openingElements = banner.querySelectorAll('.sts-opening-time')
+	formatTimes(openingElements, opening)
+	
+	const body = document.querySelector('body');
+	body.insertBefore(banner, null)
+}
+
+const formatTimes = (elements, time) => {
 	const defaultFormats = {
-		closing: { 
+		locale: {
+			"weekday": "long",
+			"month": "long",
 			"hour": "numeric",
 			"minute": "numeric",
 			"timeZoneName": "short"
 		},
-		opening: { 
-			"hour": "numeric",
-			"minute": "numeric",
-			"timeZoneName": "short"
-		}
+		token: "cccc, LLLL d 'at' h:mm a ZZZZ"
 	}
 
-	const closingElement = banner.querySelector('.sts-closing-time')
-	const closingFormat = closingElement.dataset.format ? JSON.parse(closingElement.dataset.format) : defaultFormats.closing
-	closingElement.textContent = closing.toLocaleString(closingFormat)
+	for (let index = 0; index < elements.length; index++) {
+		const el = elements[index];
+		
+		const elFormatToken  = el.dataset.formatToken
+		const elFormatLocale = el.dataset.formatLocale
+		let formatted
 	
-	const openingElement = banner.querySelector('.sts-opening-time')
-	const openingFormat = openingElement.dataset.format ? JSON.parse(openingElement.dataset.format) : defaultFormats.opening
-	openingElement.textContent = opening.toLocaleString(openingFormat)
-	
-	const body = document.querySelector('body');
-	body.insertBefore(banner, null)
+		if (elFormatToken) {
+			// Use token format first (https://moment.github.io/luxon/#/formatting?id=table-of-tokens)
+			formatted = time.toFormat(elFormatToken)
+		} else if (elFormatLocale) {
+			// Use locale format
+			formatted = time.toLocaleString(JSON.parse(elFormatLocale))
+		} else {
+			formatted = time.toFormat(defaultFormats.token)
+		}
+
+		// Set the content of the element to the formatted time.
+		el.textContent = formatted
+	}
 }
 
 const SunsetToSunset = (() => {

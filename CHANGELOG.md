@@ -7,3 +7,4 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## Unreleased
 ### Added
 - Added a default banner template if no template is defined.
+- Allow multiple closing and opening elements to be added to the banner.
