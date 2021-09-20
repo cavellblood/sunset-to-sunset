@@ -174,9 +174,13 @@ const SunsetToSunset = (() => {
 	
 	// Merge options with defaults
 	options = extend(extend({}, defaults), options)
+
+	if (options.simulateTime) {
+		console.warn('%cThe `simulateTime` option is enabled for the Sunset to Sunset plugin. Remember to disable this option once you are done verifying the settings.', 'font-size: 16px')
+	}
 	
 	if (options.debug) {
-		console.group(`Sunset to Sunset intialized with the following options:`)
+		console.groupCollapsed(`Sunset to Sunset intialized with the following options:`)
 		console.dir(options)
 		console.groupEnd()
 	}
@@ -278,7 +282,6 @@ const SunsetToSunset = (() => {
 
 			// Check if we are simulating the time
 			if (options.simulateTime) {
-				console.warn('The `simulateTime` option is enabled for the Sunset to Sunset plugin. Remember to disable this option once you are done verifying the settings.')
 				switch (options.simulateTime) {
 					case 'during-the-week':
 						duringTheWeek = true
