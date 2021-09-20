@@ -377,7 +377,7 @@ const SunsetToSunset = (() => {
 					}
 				}
 	
-				console.group(`Sunset to Sunset time checks`)
+				console.groupCollapsed(`Sunset to Sunset time checks`)
 				console.table(checks)
 				console.groupEnd()
 	
@@ -406,7 +406,7 @@ const SunsetToSunset = (() => {
 					'Time': opening.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
 				}
 
-				console.group(`Sunset to Sunset times`)
+				console.groupCollapsed(`Sunset to Sunset times`)
 				console.table(times)
 				console.groupEnd()
   
