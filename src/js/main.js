@@ -33,8 +33,8 @@ const renderBanner = (closing, opening) => {
 	const openingElements = banner.querySelectorAll('.sts-opening-time')
 	formatTimes(openingElements, opening)
 	
-	const body = document.querySelector('body');
-	body.insertBefore(banner, null)
+	// Insert the banner as the first item on the page.
+	document.body.insertBefore(banner, document.body.firstChild)
 }
 
 const formatTimes = (elements, time) => {
