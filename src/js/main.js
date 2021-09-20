@@ -319,7 +319,7 @@ const SunsetToSunset = (() => {
 				}
 			} else {
 				preparationDay = now < getMessageTime(closing)
-				bannerUp = now < closing && now > getMessageTime(closing)
+				bannerUp = now > getMessageTime(closing) && now < closing
 				duringSabbath = now >= closing && now <= opening && now.weekday >= closingDayNumber
 				afterSabbath = now > opening && now >= openingDayNumber
 			}
