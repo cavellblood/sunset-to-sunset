@@ -37,6 +37,57 @@ const renderBanner = (closing, opening) => {
 	document.body.insertBefore(banner, document.body.firstChild)
 }
 
+const renderMessage = (opening) => {
+	const userDefinedTemplate = document.querySelector('template#sts-message-template')
+
+	let template
+
+	if (userDefinedTemplate) {
+		template = userDefinedTemplate
+	} else {
+		let defaultMessageTemplate = document.createElement("template")
+		defaultMessageTemplate.innerHTML = `
+			<div class="sts-full-message__container">
+
+				<div class="sts-layout  sts-modal">
+					<div class="sts-layout__item  sts-message-area">
+						<h1 class="sts-full-message__heading">Sabbath</h1>
+						<p>
+							In a world that seems to be spinning faster every day, we choose to stop 
+							and rest every Sabbath (Saturday). It’s a day for us to relax, refresh, 
+							refocus and worship; worship a God who loved us so much that He built a 
+							day of rest into Creation week and then commanded us to keep it 
+							(knowing we probably wouldn’t do it otherwise—even though it is for 
+							our best good).
+						</p>
+					</div>
+					<div class="sts-layout__item  sts-time-area">
+						<p>
+							We will re-open on <strong><span class="sts-opening-time"></span>.</strong>
+						</p>
+					</div>
+				</div>
+			
+			</div>
+		`
+			
+		template = defaultMessageTemplate
+	}
+
+	const message = template.content.cloneNode(true)
+
+	// Find all opening elements and add formatted times
+	const openingElements = message.querySelectorAll('.sts-opening-time')
+	formatTimes(openingElements, opening)
+
+	const html = document.getElementsByTagName('html')[0]
+	
+	html.classList.add('sts-during-sabbath')
+	
+	// Insert the message as the last item on the page.
+	document.body.insertBefore(message, document.body.firstChild)
+}
+
 const formatTimes = (elements, time) => {
 	const defaultFormats = {
 		locale: {
