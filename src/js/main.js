@@ -180,7 +180,7 @@ const SunsetToSunset = (() => {
 	}
 	
 	if (options.debug) {
-		console.groupCollapsed(`Sunset to Sunset intialized with the following options:`)
+		console.group(`Sunset to Sunset intialized with the following options:`)
 		console.dir(options)
 		console.groupEnd()
 	}
@@ -389,7 +389,7 @@ const SunsetToSunset = (() => {
 					}
 				}
 	
-				console.groupCollapsed(`Sunset to Sunset time checks`)
+				console.group(`Sunset to Sunset time checks`)
 				console.table(checks)
 				console.groupEnd()
 	
@@ -418,7 +418,7 @@ const SunsetToSunset = (() => {
 					'Time': opening.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
 				}
 
-				console.groupCollapsed(`Sunset to Sunset times`)
+				console.group(`Sunset to Sunset times`)
 				console.table(times)
 				console.groupEnd()
   
