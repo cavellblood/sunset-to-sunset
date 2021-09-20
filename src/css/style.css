@@ -1,5 +1,5 @@
 .sts-banner {
-	@apply bg-yellow-500;
+	@apply bg-amber-400;
 	@apply relative;
 	@apply p-3;
 	@apply text-center;
@@ -9,4 +9,67 @@
 	& .sts-opening-time {
 		@apply font-semibold;
 	}
+}
+
+html.sts-during-sabbath, 
+html.sts-during-sabbath body {
+	@apply overflow-hidden
+}
+
+html.sts-during-sabbath body {
+	@apply max-h-screen;
+}
+
+.sts-full-message__container {
+	@apply inset-0;
+	@apply absolute;
+	@apply bg-white;
+	@apply pointer-events-auto;
+	@apply overflow-y-scroll;
+    z-index: 500;
+}
+
+.sts-full-message__heading {
+    margin-bottom: 1rem;
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+.sts-layout {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+}
+
+.sts-layout .sts-layout__item {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.sts-modal {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 7%;
+    max-width: 640px;
+    justify-content: center;
+}
+
+.sts-message-area {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 1rem;
+}
+
+.sts-time-area {
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid lightgrey;
+    padding-top: 1rem;
 }
