@@ -13,33 +13,6 @@
 </head>
 
 <body>
-	<!--
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  const colors = require('tailwindcss/colors')
-  
-  module.exports = {
-    // ...
-    theme: {
-      extend: {
-        colors: {
-          teal: colors.teal,
-          cyan: colors.cyan,
-        },
-      },
-    },
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
--->
 	<div class="bg-white">
 		<div class="relative overflow-hidden">
 			<header class="relative">
@@ -869,12 +842,18 @@
 				"long": -87.229406
 			},
 			"messageDuration": {
-				"hours": 4,
-				"minutes": 57
-			}
+				"hours": 0,
+				"minutes": 30
+			},
+			"guardDuration": {
+				"hours": 0,
+				"minutes": 10
+			},
+			"debug": true,
+			"simulateTime": "after-sabbath"
 		}'>
 	</template>
-	<template id="sts-banner-templates">
+	<template id="sts-banner-template">
 		<div>
 			Our store will be closing at
 			<ul>
