@@ -125,11 +125,35 @@ const formatTimes = (elements, time) => {
 const SunsetToSunset = (() => {
 
 	console.log(`Intializing Sunset to Sunset...`);
+
+	// Set day of week: zero-based index
+	const closingDayNumber = 5
+	const openingDayNumber = 6
+
+	const DateTime = luxon.DateTime
+	const Duration = luxon.Duration
+
+	const now = DateTime.now()
+
+	// Keep track of calculated times
+	let times = {}
+
+	times["Current Time"] = {
+		'Date': now.toLocaleString(DateTime.DATE_FULL),
+		'Time': now.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
+	}
+
+	const activateSunsetWatch = now.weekday == closingDayNumber || now.weekday == openingDayNumber
+
+	const html = document.getElementsByTagName('html')[0]
+
+	// Hide `html` until we have determined what things need to be rendered.
+	if (activateSunsetWatch) {
+		html.classList.add('hidden')
+	}
 	
 	// Set default options
 	const defaults = {
-		storeIsOpen: true,
-		showSunsetMessage: false,
 		guardDuration: {
 			minutes: 30
 		},
@@ -139,32 +163,23 @@ const SunsetToSunset = (() => {
 		location: {
 			lat: 0,
 			long: 0
-		}
+		},
+		simulateTime: false,
+		debug: false
 	}
-
-	let times = []
-
+	
 	// Get options set in HTML
 	const stsContainer = document.querySelector('template#sts-settings')
 	let options = stsContainer != null ? JSON.parse(stsContainer.dataset.settings) : {}
 	
 	// Merge options with defaults
 	options = extend(extend({}, defaults), options)
-
-	const DateTime = luxon.DateTime
-	const Duration = luxon.Duration
-
-	const now = DateTime.now()
-
-	times.push({
-		'Action': 'Current time',
-		'Date': now.toLocaleString(DateTime.DATE_FULL),
-		'Time': now.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
-	})
 	
-	// Set day of week: zero-based index
-	const closingDayNumber = 1
-	const openingDayNumber = 2
+	if (options.debug) {
+		console.group(`Sunset to Sunset intialized with the following options:`)
+		console.dir(options)
+		console.groupEnd()
+	}
 	
 	// Get location coordinates
 	const getLocation = () => {
@@ -249,111 +264,136 @@ const SunsetToSunset = (() => {
 	}
 	
 	// Only run if today is Friday or Sabbath
-	if ( now.weekday == closingDayNumber || now.weekday == openingDayNumber ) {
+	if ( activateSunsetWatch ) {
 		getTimes().then(([closingSunset, openingSunset]) => {
 			
 			// Set guard times
 			const closing = getGuardTime(closingSunset, 'closing')
 			const opening = getGuardTime(openingSunset, 'opening')
-			
-			// Check times
 
+			let duringTheWeek = false
+			let bannerUp = false
+			let duringSabbath = false
+			let afterSabbath = false
+
+			// Check if we are simulating the time
+			if (options.simulateTime) {
+				console.warn('The `simulateTime` option is enabled for the Sunset to Sunset plugin. Remember to disable this option once you are done verifying the settings.')
+				switch (options.simulateTime) {
+					case 'during-the-week':
+						duringTheWeek = true
+						break;
+
+					case 'banner-up':
+						bannerUp = true
+						break;
+
+					case 'during-sabbath':
+						duringSabbath = true
+						break;
+
+					case 'after-sabbath':
+						afterSabbath = true
+						break;
+						
+					default:
+						break;
+				}
+			} else {
+				duringTheWeek = now < getMessageTime(closing)
+				bannerUp = now < closing && now > getMessageTime(closing)
+				duringSabbath = now >= closing && now <= opening && now.weekday >= closingDayNumber
+				afterSabbath = now > opening && now >= openingDayNumber
+			}
+		
 			// Is is during the week before the time to show the banner?
-			const beforeBanner = now < getMessageTime(closing)
-
-			// Is it before closing time but the banner should be up?
-			const bannerUp = now < closing && now > getMessageTime(closing)
-			
-			// Is it during the sabbath?
-			const duringSabbath = now >= closing && now <= opening && now.weekday >= closingDayNumber
-			
-			// Is it after sundown on Saturday?
-			const afterSabbath = now > opening && now >= openingDayNumber
-			
-			times.push({
-				'Action': 'Banner up',
-				'Date': getMessageTime(closing).toLocaleString(DateTime.DATE_FULL),
-				'Time': getMessageTime(closing).toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
-			})
-
-			times.push({
-				'Action': 'Closing guard',
-				'Date': closing.toLocaleString(DateTime.DATE_FULL),
-				'Time': closing.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
-			})
-
-			times.push({
-				'Action': 'Closing sunset',
-				'Date': closingSunset.toLocaleString(DateTime.DATE_FULL),
-				'Time': closingSunset.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
-			})
-
-			times.push({
-				'Action': 'Opening sunset',
-				'Date': openingSunset.toLocaleString(DateTime.DATE_FULL),
-				'Time': openingSunset.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
-			})
-
-			times.push({
-				'Action': 'Opening guard',
-				'Date': opening.toLocaleString(DateTime.DATE_FULL),
-				'Time': opening.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
-			})
-
-			console.table(times)
-
-			let checks = []
-
-			checks.push({ 
-				"key": 'Before banner',
-			 	"value": beforeBanner
-			})
-			checks.push({ 
-				"key": 'Banner up',
-			 	"value": bannerUp
-			})
-			checks.push({ 
-				"key": 'During the Sabbath',
-			 	"value": duringSabbath
-			})
-			checks.push({ 
-				"key": 'After Sabbath',
-			 	"value": afterSabbath
-			})
-
-			console.table(checks)
-
-			if (beforeBanner) {
-				console.log(`During the week.`)
-
+			if (duringTheWeek) {
 				// Refresh the page when it's time to show the banner.
 				const refreshTime = getMessageTime(closing).diff(now, 'milliseconds').toObject();
 
-				if (now < getMessageTime(closing)) {
-					setTimeout(() => {
-						location.reload()
-					}, refreshTime.milliseconds);
-				}
+				setTimeout(() => {
+					location.reload()
+				}, refreshTime.milliseconds);
 			}
 
+			// Is it before closing time but the banner should be up?
 			if (bannerUp) {
-				console.log('time to show the banner')
-
 				renderBanner(closing, opening)
 
 				// Refresh the page when it's closing time.
 				const refreshTime = closing.diff(now, 'milliseconds').toObject();
 
-				if (now < closing) {
-					setTimeout(() => {
-						location.reload()
-					}, refreshTime.milliseconds);
-				}
+				setTimeout(() => {
+					location.reload()
+				}, refreshTime.milliseconds);
 			}
 
+			// Is it during the sabbath?
 			if (duringSabbath) {
+				renderMessage(opening)
+
+				// Refresh the page when it's opening time.
+				const refreshTime = opening.diff(now, 'milliseconds').toObject();
+
+				setTimeout(() => {
+					location.reload()
+				}, refreshTime.milliseconds);
+			}
+
+			// Is it after sundown on Saturday?
+			if (afterSabbath) {
 
 			}
+
+			// Unhide `html` after we determine what things need to be rendered.
+			html.classList.remove('hidden')
+
+			if (options.debug) {
+
+				let checks = {
+					Enabled: {
+						"During the week": duringTheWeek,
+						"Banner up": bannerUp,
+						"During the Sabbath": duringSabbath,
+						"After Sabbath": afterSabbath
+					}
+				}
+	
+				console.group(`Sunset to Sunset time checks`)
+				console.table(checks)
+				console.groupEnd()
+	
+				times['Banner up'] = {
+					'Date': getMessageTime(closing).toLocaleString(DateTime.DATE_FULL),
+					'Time': getMessageTime(closing).toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
+				}
+	
+				times['Closing guard'] = {
+					'Date': closing.toLocaleString(DateTime.DATE_FULL),
+					'Time': closing.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
+				}
+	
+				times['Closing sunset'] = {
+					'Date': closingSunset.toLocaleString(DateTime.DATE_FULL),
+					'Time': closingSunset.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
+				}
+	
+				times['Opening sunset'] = {
+					'Date': openingSunset.toLocaleString(DateTime.DATE_FULL),
+					'Time': openingSunset.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
+				}
+	
+				times['Opening guard'] = {
+					'Date': opening.toLocaleString(DateTime.DATE_FULL),
+					'Time': opening.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
+				}
+
+				console.group(`Sunset to Sunset times`)
+				console.table(times)
+				console.groupEnd()
+  
+			}
+
 		})
 	} else {
 		console.log('Sunset to Sunset: Exiting because today is not closing day')
