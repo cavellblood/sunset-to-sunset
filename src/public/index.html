@@ -25,12 +25,53 @@
 	<template id="sts-banner">
 		<div>
 			Our store will be closing at
-			<span class="sts-closing-time" data-format-custom='{ 
-					"hour": "numeric",
-					"minute": "numeric",
-					"timeZoneName": "short"
-				}'></span> and
-			open <span class="sts-opening-time" data-format-custom='{ "hour": "numeric" }'></span>
+			<ul>
+				<li>
+					Default Formatting: <span class="sts-closing-time"></span>
+				</li>
+				<li>
+					User-defined Locale: <span class="sts-closing-time" data-format-locale='{ 
+						"hour": "numeric",
+						"minute": "numeric",
+						"timeZoneName": "short"
+					}'></span>
+				</li>
+				<li>
+					User-defined Token: <span class="sts-closing-time" data-format-token="cccc 'at' h:mm a ZZZZ"></span>
+				</li>
+				<li>
+					User-defined Locale and Token (token wins): <span class="sts-closing-time" data-format-locale='{ 
+						"hour": "numeric",
+						"minute": "numeric",
+						"timeZoneName": "short"
+					}' data-format-token="LLLL d 'at' h:mm a ZZZZ"></span>
+				</li>
+			</ul>
+
+			<span>and will re-open on</span>
+
+			<ul>
+				<li>
+					Default Formatting: <span class="sts-opening-time"></span>
+				</li>
+				<li>
+					User-defined Locale: <span class="sts-opening-time" data-format-locale='{ 
+						"hour": "numeric",
+						"minute": "numeric",
+						"timeZoneName": "short"
+					}'></span>
+				</li>
+				<li>
+					User-defined Token: <span class="sts-opening-time" data-format-token="cccc 'at' h:mm a ZZZZ"></span>
+				</li>
+				<li>
+					User-defined Locale and Token (token wins): <span class="sts-opening-time" data-format-locale='{ 
+						"hour": "numeric",
+						"minute": "numeric",
+						"timeZoneName": "short"
+					}' data-format-token="LLLL d 'at' h:mm a ZZZZ"></span>
+				</li>
+			</ul>
 		</div>
 	</template>
 	<template id="sts-message">
