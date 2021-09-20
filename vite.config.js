@@ -12,7 +12,7 @@ export default ({ command }) => ({
 		rollupOptions: {
 			input: {
 				"sunset-to-sunset": "./src/js/main.js",
-				index: "./src/public/index.html"
+				test: "./src/tests/index.html"
 			},
 			output: {
 				sourcemap: true,
