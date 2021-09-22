@@ -2,7 +2,7 @@
   "name": "sunset-to-sunset",
   "version": "0.0.0",
   "description": "",
-  "main": "src/js/index.js",
+  "main": "src/js/main.js",
   "author": "Cavell Blood",
   "scripts": {
     "dev": "vite",

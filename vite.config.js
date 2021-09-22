@@ -22,7 +22,7 @@ export default ({ command }) => ({
 			},
 		},
 	},
-	publicDir: './src/public',
+	publicDir: './src/tests',
   plugins: [
     legacy({
       targets: ['defaults', 'not IE 11']
