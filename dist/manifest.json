@@ -1,0 +1,39 @@
+{
+  "js/main-legacy.js": {
+    "file": "assets/sunset-to-sunset-legacy.min.js",
+    "src": "js/main-legacy.js",
+    "isEntry": true
+  },
+  "tests/index-legacy.html": {
+    "file": "assets/test-legacy.min.js",
+    "src": "tests/index-legacy.html",
+    "isEntry": true,
+    "imports": [
+      "js/main-legacy.js"
+    ]
+  },
+  "../vite/legacy-polyfills": {
+    "file": "assets/polyfills-legacy.53eda98a.js",
+    "src": "../vite/legacy-polyfills",
+    "isEntry": true
+  },
+  "js/main.js": {
+    "file": "assets/sunset-to-sunset.min.js",
+    "src": "js/main.js",
+    "isEntry": true,
+    "css": [
+      "assets/sunset-to-sunset.css"
+    ]
+  },
+  "tests/index.html": {
+    "file": "assets/test.min.js",
+    "src": "tests/index.html",
+    "isEntry": true,
+    "imports": [
+      "js/main.js"
+    ],
+    "css": [
+      "assets/test.css"
+    ]
+  }
+}

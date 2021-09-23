@@ -1,12 +1,24 @@
 {
   "name": "sunset-to-sunset",
-  "version": "1.0.0",
+  "version": "1.0.0-beta.1",
   "description": "",
-  "main": "index.js",
-  "keywords": [],
+  "main": "src/js/main.js",
   "author": "Cavell Blood",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
   "devDependencies": {
-    "@types/luxon": "^2.0.4"
+    "@rollup/plugin-commonjs": "^20.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@types/luxon": "^2.0.4",
+    "@vitejs/plugin-legacy": "^1.5.0",
+    "autoprefixer": "^10.3.4",
+    "postcss": "^8.3.6",
+    "postcss-import": "^14.0.2",
+    "tailwindcss": "^2.2.15",
+    "vite": "^2.5.4"
   },
   "dependencies": {
     "luxon": "^2.0.2"
