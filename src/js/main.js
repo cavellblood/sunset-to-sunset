@@ -38,7 +38,9 @@ const renderBanner = (closing, opening) => {
 }
 
 const renderMessage = (opening) => {
-	const userDefinedTemplate = document.querySelector('template#sts-message-template')
+	const userFullTemplate = document.querySelector('template#sts-full-message-template')
+	const userSimpleTemplate = document.querySelector('template#sts-message-template')
+	const userDefinedTemplate = userFullTemplate ? userFullTemplate : userSimpleTemplate
 
 	let message
 
@@ -79,23 +81,34 @@ const renderMessage = (opening) => {
 		</div>
 	`
 
-	const messageWrapper = template.content.cloneNode(true)
+	const messageTemplate = template.content.cloneNode(true)
 
 	// Find all opening elements and add formatted times
-	const openingElements = messageWrapper.querySelectorAll('.sts-opening-time')
+	const openingElements = messageTemplate.querySelectorAll('.sts-opening-time')
 	formatTimes(openingElements, opening)
 
-	const messageArea = messageWrapper.querySelector('.sts-message-area');
+	if (userFullTemplate) {
+		console.log('full user template')
+		let messageContainer = messageTemplate.querySelector('.sts-full-message__container');
 
-	console.log(message)
-	messageArea.insertBefore(message, null)
+		while (messageContainer.firstElementChild) {
+			messageContainer.removeChild(messageContainer.firstChild)
+		}
+
+		messageContainer.insertBefore(message, null)
+
+	} else if (userSimpleTemplate) {
+		console.log('simple user template')
+		const messageArea = messageTemplate.querySelector('.sts-message-area');
+		messageArea.insertBefore(message, null)
+	}
+
 
 	const html = document.getElementsByTagName('html')[0]
-	
 	html.classList.add('sts-during-sabbath')
 	
-	// Insert the messageWrapper as the last item on the page.
-	document.body.insertBefore(messageWrapper, document.body.firstChild)
+	// Insert the messageTemplate as the last item on the page.
+	document.body.insertBefore(messageTemplate, document.body.firstChild)
 }
 
 const formatTimes = (elements, time) => {
