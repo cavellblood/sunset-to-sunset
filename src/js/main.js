@@ -88,7 +88,6 @@ const renderMessage = (opening) => {
 	formatTimes(openingElements, opening)
 
 	if (userFullTemplate) {
-		console.log('full user template')
 		let messageContainer = messageTemplate.querySelector('.sts-full-message__container');
 
 		while (messageContainer.firstElementChild) {
@@ -98,7 +97,6 @@ const renderMessage = (opening) => {
 		messageContainer.insertBefore(message, null)
 
 	} else if (userSimpleTemplate) {
-		console.log('simple user template')
 		const messageArea = messageTemplate.querySelector('.sts-message-area');
 		messageArea.insertBefore(message, null)
 	}
