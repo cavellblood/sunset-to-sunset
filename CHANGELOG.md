@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
+### Changed
+- Specify Vite port number so that it doesn't conflict with other test projects running on port `3000`.
 ### Fixed
 - Fix an issue where the opening times were being set too soon on the full message template and subsequently not being rendered. ([#3](https://github.com/cavellblood/sunset-to-sunset/issues/3))
 

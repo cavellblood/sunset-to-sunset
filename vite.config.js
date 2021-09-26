@@ -30,5 +30,8 @@ export default ({ command }) => ({
 		nodeResolve({
 			moduleDirectories: [path.resolve("./node_modules")],
 		}),
-	]
+	],
+	server: {
+		port: 3100
+	}
 });
