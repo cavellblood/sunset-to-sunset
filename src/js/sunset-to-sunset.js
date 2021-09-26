@@ -447,6 +447,9 @@ const SunsetToSunset = (() => {
 
 		})
 	} else {
+		// Unhide `html` after we determine what things need to be rendered.
+		html.style.display = "block"
+		
 		console.log('Sunset to Sunset: Exiting because today is not closing day')
 	}
 
