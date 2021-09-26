@@ -105,7 +105,7 @@ const renderMessage = (opening) => {
 	const html = document.getElementsByTagName('html')[0]
 	html.classList.add('sts-during-sabbath')
 	
-	// Insert the messageTemplate as the last item on the page.
+	// Insert the messageTemplate as the first item on the page.
 	document.body.insertBefore(messageTemplate, document.body.firstChild)
 }
 
