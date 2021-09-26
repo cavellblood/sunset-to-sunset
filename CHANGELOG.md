@@ -4,15 +4,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 1.0.0
+## 1.0.1 - - 2021-09-26
+### Changed
+- Specify Vite port number so that it doesn't conflict with other test projects running on port `3000`.
+
+### Fixed
+- Fix an issue where the opening times were being set too soon on the full message template and subsequently not being rendered. ([#3](https://github.com/cavellblood/sunset-to-sunset/issues/3))
+
+## 1.0.0 - 2021-09-23
 ### Changed
 - Initial Release
 
-## 1.0.0-beta.2
+## 1.0.0-beta.2 - 2021-09-23
 ### Fixed
 - Added build files.
 
-## 1.0.0-beta.1
+## 1.0.0-beta.1 - 2021-09-23
 ### Added
 - Added a default banner template if no template is defined.
 - Allow multiple closing and opening elements to be added to the banner.
