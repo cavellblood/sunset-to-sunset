@@ -145,6 +145,28 @@ You can pass an object of configuration options with the `data-settings` attribu
   }
   ```
 
+### `simulateTime`
+- **Type:** `Boolean | String`
+- **Default:** `false`
+- **Description:** This allows you to simulate the time to see how the plugin works at different times of the week and different times of the day. The accepted values are:
+  - `preparation-day`
+  - `banner-up`
+  - `during-sabbath`
+  - `after-sabbath`
+- **Example:** This would show the Sabbath message as it would appear during the Sabbath hours.
+  ``` json
+  "simulateTime": "during-sabbath"
+  ```
+
+### `debug`
+- **Type:** `Boolean`
+- **Default:** `false`
+- **Description:** When this is set to `true` it will output the calculated times to the console. **N.B.:** this will only show the calculated times if the current weekday is equal to the Friday or Saturday or if the `simulateTime` setting is not `false`. This is done so that it doesn't need to calculate the sunset times unnessarily during the week.
+- **Example:** This would output the calculated times to the console.
+  ``` json
+  "debug": "true"
+  ```
+
 
 
 
