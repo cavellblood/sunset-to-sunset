@@ -1,7 +1,7 @@
 {
-  "js/main-legacy.js": {
+  "js/sunset-to-sunset-legacy.js": {
     "file": "assets/sunset-to-sunset-legacy.min.js",
-    "src": "js/main-legacy.js",
+    "src": "js/sunset-to-sunset-legacy.js",
     "isEntry": true
   },
   "tests/index-legacy.html": {
@@ -9,7 +9,7 @@
     "src": "tests/index-legacy.html",
     "isEntry": true,
     "imports": [
-      "js/main-legacy.js"
+      "js/sunset-to-sunset-legacy.js"
     ]
   },
   "../vite/legacy-polyfills": {
@@ -17,9 +17,9 @@
     "src": "../vite/legacy-polyfills",
     "isEntry": true
   },
-  "js/main.js": {
+  "js/sunset-to-sunset.js": {
     "file": "assets/sunset-to-sunset.min.js",
-    "src": "js/main.js",
+    "src": "js/sunset-to-sunset.js",
     "isEntry": true,
     "css": [
       "assets/sunset-to-sunset.css"
@@ -30,7 +30,7 @@
     "src": "tests/index.html",
     "isEntry": true,
     "imports": [
-      "js/main.js"
+      "js/sunset-to-sunset.js"
     ],
     "css": [
       "assets/test.css"
