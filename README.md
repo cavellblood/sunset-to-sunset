@@ -173,9 +173,17 @@ If you want to have full control over the appearance and layout of the message t
 To define your custom message template add the following snippet to your page, preferrably in the `<head>` tag:
 ``` html
 <template id="sts-full-message-template">
-	<p>
-		Your message here
-	</p>
+	<div class="your-custom-layout-class">
+		<div class="your-message-area">
+			<h1 class="your-message__heading">Sabbath</h1>
+			<p>Message here</p>
+		</div>
+		<div class="your-custom-time-area">
+			<p>
+				We will re-open on <strong><span class="sts-opening-time"></span>.</strong>
+			</p>
+		</div>
+	</div>
 </template>
 ```
 
