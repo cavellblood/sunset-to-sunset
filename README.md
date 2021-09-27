@@ -86,6 +86,74 @@ Link directly to the Sunset to Sunset files on [unpkg](https://unpkg.com/).
 ## Usage
 Sunset to sunset needs some initial configuration needed for it to work correctly for your location. It will work out of the box without configuration but it won't be for your location.
 
+## Custom Templates
+Sunset to sunset has some built-in banner and message templates that will be shown at the appropriate times but sometimes you need to define your own wording. You can do that with the html `template` elements.
+
+### Special Template Tags
+You can add the following two tags to your custom templates to render the closing time and the opening times.
+
+#### Closing Time
+``` html
+<span class="sts-closing-time"></span>
+```
+#### Opening Time
+``` html
+<span class="sts-opening-time"></span>
+```
+
+### Formatting Times
+There are three methods for setting the format on the calculated times in your custom templates:
+
+1. **[Token](#token):** Allows you to set what order each part of the date and time appear so it looks the same for everyone.
+2. **[Locale](#locale):** Using whatever the user's browser's date/time format is set to.
+3. **[Default](#default):** Basically let the script decide for you.
+
+#### Token
+This is the most flexible formatting option as it allows you to define the order of the date/time parts and the formatting. To use the `token` format include the [special closing and opening time tags](#special-template-tags) with a `data-format-token` like the following:
+``` html
+<span class="sts-closing-time" data-format-token="cccc 'at' h:mm a ZZZZ"></span>
+
+<!-- Output: Monday at 7:44 PM CDT -->
+```
+> Note that you can add words in the token format by surrounding them with single quotes like in the example above.
+
+**Advanced formatting:** The [Luxon documentation has a full list of formatting tokens](https://moment.github.io/luxon/#/formatting?id=table-of-tokens) so that you can fine-tune your dates and times.
+
+#### Locale
+With this option you can't arrange the parts of the date and time but you can decide how they are formatted. To use the `locale` format include the [special closing and opening time tags](#special-template-tags) with a `data-format-locale` like the following:
+``` html
+<span class="sts-closing-time" data-format-locale='{ 
+	"weekday": "long",
+	"month": "long",
+	"hour": "numeric",
+	"minute": "numeric",
+	"timeZoneName": "short"
+}'></span>
+
+<!-- Output: September Monday, 7:44 PM CDT -->
+```
+
+#### Default
+Include the [special closing and opening time tags](#special-template-tags) with no `data-format-locale` or `data-format-token` attributes and it will output the times with the token format.
+``` json
+"cccc, LLLL d 'at' h:mm a ZZZZ"  // Output: Monday, September 27 at 7:44 PM CDT
+```
+
+### Banner Template
+To define your custom banner template add the following snippet to your page, preferrably in the `<head>` tag.
+
+
+``` html
+<template id="sts-banner-template">
+	<div class="sts-banner  YOUR-CUSTOM-CLASSES-HERE">
+		Our store will be closing at 
+		<span class="sts-closing-time"></span>
+		<span>and will re-open on</span>
+		<span class="sts-opening-time"></span>
+	</div>
+</template>
+```
+
 ## Defining the Settings
 The settings are defined with an html `template` element. The template must have an `id` of `sts-settings` and the data attribute `data-settings` like below:
 
@@ -121,8 +189,7 @@ You can pass an object of configuration options with the `data-settings` attribu
 - **Type:** `Object`
 - **Default:** `{ "minutes": 30 }`
 - **Description:** This allows you to set the duration of the guard before and after the Sabbath. Whatever time you set here will determine when your Sabbath message will come up and go down. 
-
-  It accepts any object of options that can have any of the following keys: `years`, `quarters` (three months), `months`, `weeks`, `days`, `hours`, `minutes`, `seconds`, and `milliseconds`. It's recommended to the smaller units like `hours`, `minutes`, etc. though because otherwise you'll be calculating guard times that are into the next week.
+  - It accepts any object of options that can have any of the following keys: `years`, `quarters` (three months), `months`, `weeks`, `days`, `hours`, `minutes`, `seconds`, and `milliseconds`. It's recommended to the smaller units like `hours`, `minutes`, etc. though because otherwise you'll be calculating guard times that are into the next week.
 - **Example:** If the sun set on Friday at 8:00pm and on Saturday at 8:02pm this would calculate the closing guard time at 5:15pm on Friday and the opening time at 10:47pm on Saturday:
   ``` json
   "guardDuration": {
@@ -135,8 +202,7 @@ You can pass an object of configuration options with the `data-settings` attribu
 - **Type:** `Object`
 - **Default:** `{ "hours": 3 }`
 - **Description:** This allows you to set the duration that the banner will be visible before the Sabbath message appears.
-
-  It accepts any object of options that can have any of the following keys: `years`, `quarters` (three months), `months`, `weeks`, `days`, `hours`, `minutes`, `seconds`, and `milliseconds`. Generally you will only need to use `hours` and `minutes` though.
+  - It accepts any object of options that can have any of the following keys: `years`, `quarters` (three months), `months`, `weeks`, `days`, `hours`, `minutes`, `seconds`, and `milliseconds`. Generally you will only need to use `hours` and `minutes` though.
 - **Example:** This would show the banner 3 hours and 3 minutes before the calculated closing guard time determined by the `guardDuration` option:
   ``` json
   "bannerDuration": {
@@ -166,9 +232,3 @@ You can pass an object of configuration options with the `data-settings` attribu
   ``` json
   "debug": "true"
   ```
-
-
-
-
-
-
