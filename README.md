@@ -84,21 +84,50 @@ Link directly to the Sunset to Sunset files on [unpkg](https://unpkg.com/).
 
 
 ## Usage
-Sunset to sunset needs some initial configuration needed for it to work correctly for your location.
+Sunset to sunset needs some initial configuration needed for it to work correctly for your location. It will work out of the box without configuration but it won't be for your location.
 
 ### Defining the Settings
-The settings are defined with an html `template` element like so:
+The settings are defined with an html `template` element. The template must have an `id` of `sts-settings` and the data attribute `data-settings` like below:
 
 ``` html
 <template 
 	id="sts-settings" 
 	data-settings='{
 		"location": {
-			"lat": 35.750413,
-			"long": -87.229406
+			"lat": 35.7686615,
+			"long": -87.4871698
 		}
 }'></template>
 ```
+
+> **N.B.:** the `data-settings` attribute must be valid JSON. Keys need to be quoted, for example `"location":`. The attribute value uses single quotes ', but the JSON entities use double-quotes ".
+
+### Settings
+You can pass an object of configuration options with the `data-settings` attribute in the template above. The allowed values are as follows:
+
+#### `location`
+- **Type**: `Object`
+- **Default**: `{}`
+
+##### `location.lat`
+- **Type**: `Number`
+
+
+
+
+|||
+|---|---|
+| Type | `Object` |
+
+| Name | Type | Default | Description |
+|---|---|---|---|
+| `location` | `Object` | `{ "lat": 0, "long": 0 }` | An object containing the keys `lat` and `long`. |
+| `guardDuration` | `Object` | `{ "minutes": 30 }` | Any object of options that can be provided to [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat) |
+| `messageDuration` | `Object` | `{ "minutes": 30 }` | Any object of options that can be provided to [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat) |
+|  |  |  |  |
+|  |  |  |  |
+
+
 
 
 
