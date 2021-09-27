@@ -126,12 +126,8 @@ You can pass an object of configuration options with the `data-settings` attribu
 - **Description:** This allows you to set the duration of the guard before and after the Sabbath. Whatever time you set here will determine when your Sabbath message will come up and go down. 
 
   It accepts any object of options that can have any of the following keys: `years`, `quarters` (three months), `months`, `weeks`, `days`, `hours`, `minutes`, `seconds`, and `milliseconds`. It's recommended to the smaller units like `hours`, `minutes`, etc. though because otherwise you'll be calculating guard times that are into the next week.
-- **Example:**
+- **Example:** If the sun set on Friday at 8:00pm and on Saturday at 8:02pm this would calculate the closing guard time at 5:15pm on Friday and the opening time at 10:47pm on Saturday:
   ``` json
-  // If the sun set on Friday at 8:00pm and on Saturday at 8:02pm
-  // this would calculate the closing guard time at 5:15pm on Friday
-  // and the opening time at 10:47pm on Saturday.
-  
   "guardDuration": {
 	  "hours": 2,
 	  "minutes": 45
@@ -144,12 +140,8 @@ You can pass an object of configuration options with the `data-settings` attribu
 - **Description:** This allows you to set the duration that the banner will be visible before the Sabbath message appears.
 
   It accepts any object of options that can have any of the following keys: `years`, `quarters` (three months), `months`, `weeks`, `days`, `hours`, `minutes`, `seconds`, and `milliseconds`. Generally you will only need to use `hours` and `minutes` though.
-- **Example:**
+- **Example:** This would show the banner 3 hours and 3 minutes before the calculated closing guard time determined by the `guardDuration` option:
   ``` json
-  // This would show the banner 3 hours and 3 minutes 
-  // before the calculated closing guard time determined 
-  // by the `guardDuration` option.
-
   "bannerDuration": {
 	  "hours": 3,
 	  "minutes": 30
