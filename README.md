@@ -86,7 +86,7 @@ Link directly to the Sunset to Sunset files on [unpkg](https://unpkg.com/).
 ## Usage
 Sunset to sunset needs some initial configuration needed for it to work correctly for your location. It will work out of the box without configuration but it won't be for your location.
 
-### Defining the Settings
+## Defining the Settings
 The settings are defined with an html `template` element. The template must have an `id` of `sts-settings` and the data attribute `data-settings` like below:
 
 ``` html
@@ -102,30 +102,59 @@ The settings are defined with an html `template` element. The template must have
 
 > **N.B.:** the `data-settings` attribute must be valid JSON. Keys need to be quoted, for example `"location":`. The attribute value uses single quotes ', but the JSON entities use double-quotes ".
 
-### Settings
+## Settings
 You can pass an object of configuration options with the `data-settings` attribute in the template above. The allowed values are as follows:
 
-#### `location`
-- **Type**: `Object`
-- **Default**: `{}`
+### `location`
+- **Type:** `Object`
+- **Default:** `{ "lat": 0, "long": 0 }`
+- **Description:** An object defining the latitude and longitude of the location to calculate the sunset times.
 
-##### `location.lat`
-- **Type**: `Number`
+#### `location.lat`
+- **Type:** `Number`
+- **Default:** `0`
+- **Description:** The latitude of the location to calculate the sunset times.
 
+#### `location.long`
+- **Type:** `Number`
+- **Default:** `0`
+- **Description:** The longitude of the location to calculate the sunset times.
 
+### `guardDuration`
+- **Type:** `Object`
+- **Default:** `{ "minutes": 30 }`
+- **Description:** This allows you to set the duration of the guard before and after the Sabbath. Whatever time you set here will determine when your Sabbath message will come up and go down. 
 
+  It accepts any object of options that can have any of the following keys: `years`, `quarters` (three months), `months`, `weeks`, `days`, `hours`, `minutes`, `seconds`, and `milliseconds`. It's recommended to the smaller units like `hours`, `minutes`, etc. though because otherwise you'll be calculating guard times that are into the next week.
+- **Example:**
+  ``` json
+  // If the sun set on Friday at 8:00pm and on Saturday at 8:02pm
+  // this would calculate the closing guard time at 5:15pm on Friday
+  // and the opening time at 10:47pm on Saturday.
+  
+  "guardDuration": {
+	  "hours": 2,
+	  "minutes": 45
+  }
+  ```
 
-|||
-|---|---|
-| Type | `Object` |
+### `bannerDuration`
+- **Type:** `Object`
+- **Default:** `{ "hours": 3 }`
+- **Description:** This allows you to set the duration that the banner will be visible before the Sabbath message appears.
 
-| Name | Type | Default | Description |
-|---|---|---|---|
-| `location` | `Object` | `{ "lat": 0, "long": 0 }` | An object containing the keys `lat` and `long`. |
-| `guardDuration` | `Object` | `{ "minutes": 30 }` | Any object of options that can be provided to [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat) |
-| `messageDuration` | `Object` | `{ "minutes": 30 }` | Any object of options that can be provided to [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat) |
-|  |  |  |  |
-|  |  |  |  |
+  It accepts any object of options that can have any of the following keys: `years`, `quarters` (three months), `months`, `weeks`, `days`, `hours`, `minutes`, `seconds`, and `milliseconds`. Generally you will only need to use `hours` and `minutes` though.
+- **Example:**
+  ``` json
+  // This would show the banner 3 hours and 3 minutes 
+  // before the calculated closing guard time determined 
+  // by the `guardDuration` option.
+
+  "bannerDuration": {
+	  "hours": 3,
+	  "minutes": 30
+  }
+  ```
 
 
 
