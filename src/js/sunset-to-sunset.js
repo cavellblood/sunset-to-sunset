@@ -164,6 +164,9 @@ const SunsetToSunset = (() => {
 	const stsContainer = document.querySelector('template#sts-settings')
 	let days = {}
 
+	// Mainly for debugging purposes you can set the closing and opening day number 
+	// so the plugin activates on the day you are testing it for example instead of 
+	// needing to wait until Friday to test it.
 	if (stsContainer.dataset.days) {
 		days = JSON.parse(stsContainer.dataset.days)
 	}
@@ -247,14 +250,7 @@ const SunsetToSunset = (() => {
 	
 	// Get closing sunset
 	const getClosingSunset = () => {
-		let daysToClosing
-
-		
-		if (options.simulateTime) {
-			daysToClosing = 0
-		} else {
-			daysToClosing = getClosingDayNumber() - now.weekday
-		}
+		let daysToClosing = getClosingDayNumber() - now.weekday
 
 		const closingDate = DateTime.fromISO(now.plus({
 			days: daysToClosing
@@ -267,13 +263,7 @@ const SunsetToSunset = (() => {
 
 	// Get opening sunset
 	const getOpeningSunset = () => {
-		let daysToOpening
-
-		if (options.simulateTime) {
-			daysToOpening = 1
-		} else {
-			daysToOpening = getOpeningDayNumber() - now.weekday
-		}
+		let daysToOpening = getOpeningDayNumber() - now.weekday
 
 		const openingDate = DateTime.fromISO(now.plus({
 			days: daysToOpening
@@ -329,40 +319,43 @@ const SunsetToSunset = (() => {
 	
 	// Only run if today is Friday or Sabbath
 	if ( activateSunsetWatch || options.simulateTime) {
+		let preparationDay = false
+		let bannerUp = false
+		let duringSabbath = false
+		let afterSabbath = false
+
+		// Check if we are simulating the time
+		if (options.simulateTime) {
+			switch (options.simulateTime) {
+				case 'preparation-day':
+					preparationDay = true
+					break;
+
+				case 'banner-up':
+					bannerUp = true
+					break;
+
+				case 'during-sabbath':
+					duringSabbath = true
+					break;
+
+				case 'after-sabbath':
+					afterSabbath = true
+					break;
+					
+				default:
+					break;
+			}
+		}
+
 		getTimes().then(([closingSunset, openingSunset]) => {
 			
 			// Set guard times
 			const closing = getGuardTime(closingSunset, 'closing')
 			const opening = getGuardTime(openingSunset, 'opening')
 
-			let preparationDay = false
-			let bannerUp = false
-			let duringSabbath = false
-			let afterSabbath = false
-
-			// Check if we are simulating the time
-			if (options.simulateTime) {
-				switch (options.simulateTime) {
-					case 'preparation-day':
-						preparationDay = true
-						break;
-
-					case 'banner-up':
-						bannerUp = true
-						break;
-
-					case 'during-sabbath':
-						duringSabbath = true
-						break;
-
-					case 'after-sabbath':
-						afterSabbath = true
-						break;
-						
-					default:
-						break;
-				}
-			} else {
+			if (!options.simulateTime) {
+				// Set time checks
 				preparationDay = now < getMessageTime(closing)
 				bannerUp = now > getMessageTime(closing) && now < closing
 				duringSabbath = now >= closing && now <= opening && now.weekday >= getClosingDayNumber()
@@ -466,9 +459,8 @@ const SunsetToSunset = (() => {
 				console.group(`Sunset to Sunset times`)
 				console.table(times)
 				console.groupEnd()
-  
+		
 			}
-
 		})
 	} else {
 		// Unhide `html` after we determine what things need to be rendered.
