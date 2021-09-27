@@ -147,10 +147,6 @@ const SunsetToSunset = (() => {
 
 	console.log(`Intializing Sunset to Sunset...`);
 
-	// Set day of week: zero-based index
-	const closingDayNumber = 5
-	const openingDayNumber = 6
-
 	const DateTime = luxon.DateTime
 	const Duration = luxon.Duration
 
@@ -164,17 +160,44 @@ const SunsetToSunset = (() => {
 		'Time': now.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
 	}
 
-	const activateSunsetWatch = now.weekday == closingDayNumber || now.weekday == openingDayNumber
+	// Get options set in HTML
+	const stsContainer = document.querySelector('template#sts-settings')
+	let days = {}
 
-	const html = document.getElementsByTagName('html')[0]
+	// Mainly for debugging purposes you can set the closing and opening day number 
+	// so the plugin activates on the day you are testing it for example instead of 
+	// needing to wait until Friday to test it.
+	if (stsContainer.dataset.days) {
+		days = JSON.parse(stsContainer.dataset.days)
+	}
 
+	// Set day of week: zero-based index
+	const dayDefaults = {
+		closing: 5,
+		opening: 6
+	}
+
+	// Merge days with dayDefaults
+	days = extend(extend({}, dayDefaults), days)
+
+	const getClosingDayNumber = () => {
+		return days.closing
+	}
+	
+	const getOpeningDayNumber = () => {
+		return days.opening
+	}
+
+	const activateSunsetWatch = now.weekday == getClosingDayNumber() || now.weekday == getOpeningDayNumber()
+
+	
 	// Set default options
 	const defaults = {
 		guardDuration: {
 			minutes: 30
 		},
-		messageDuration: {
-			minutes: 60
+		bannerDuration: {
+			hours: 3,
 		},
 		location: {
 			lat: 0,
@@ -184,12 +207,16 @@ const SunsetToSunset = (() => {
 		debug: false
 	}
 	
-	// Get options set in HTML
-	const stsContainer = document.querySelector('template#sts-settings')
-	let options = stsContainer != null ? JSON.parse(stsContainer.dataset.settings) : {}
+	let options = {}
+	
+	if (stsContainer.dataset.settings) {
+		options = JSON.parse(stsContainer.dataset.settings)
+	}
 	
 	// Merge options with defaults
 	options = extend(extend({}, defaults), options)
+
+	const html = document.getElementsByTagName('html')[0]
 
 	// Hide `html` until we have determined what things need to be rendered.
 	if (activateSunsetWatch || options.simulateTime) {
@@ -223,14 +250,7 @@ const SunsetToSunset = (() => {
 	
 	// Get closing sunset
 	const getClosingSunset = () => {
-		let daysToClosing
-
-		
-		if (options.simulateTime) {
-			daysToClosing = 0
-		} else {
-			daysToClosing = closingDayNumber - now.weekday
-		}
+		let daysToClosing = getClosingDayNumber() - now.weekday
 
 		const closingDate = DateTime.fromISO(now.plus({
 			days: daysToClosing
@@ -243,13 +263,7 @@ const SunsetToSunset = (() => {
 
 	// Get opening sunset
 	const getOpeningSunset = () => {
-		let daysToOpening
-
-		if (options.simulateTime) {
-			daysToOpening = 1
-		} else {
-			daysToOpening = openingDayNumber - now.weekday
-		}
+		let daysToOpening = getOpeningDayNumber() - now.weekday
 
 		const openingDate = DateTime.fromISO(now.plus({
 			days: daysToOpening
@@ -261,8 +275,8 @@ const SunsetToSunset = (() => {
 	}
 	
 	// Get message minutes
-	const getMessageDuration = () => {
-		let duration = Duration.fromObject(options.messageDuration)
+	const getBannerDuration = () => {
+		let duration = Duration.fromObject(options.bannerDuration)
 		
 		return duration
 	}
@@ -274,7 +288,7 @@ const SunsetToSunset = (() => {
 	
 	//Get message time
 	const getMessageTime = (date) => {
-		return date.minus(getMessageDuration())
+		return date.minus(getBannerDuration())
 	}
 	
 	// Get guard time. `date` is a Luxon DateTime object.
@@ -305,44 +319,47 @@ const SunsetToSunset = (() => {
 	
 	// Only run if today is Friday or Sabbath
 	if ( activateSunsetWatch || options.simulateTime) {
+		let preparationDay = false
+		let bannerUp = false
+		let duringSabbath = false
+		let afterSabbath = false
+
+		// Check if we are simulating the time
+		if (options.simulateTime) {
+			switch (options.simulateTime) {
+				case 'preparation-day':
+					preparationDay = true
+					break;
+
+				case 'banner-up':
+					bannerUp = true
+					break;
+
+				case 'during-sabbath':
+					duringSabbath = true
+					break;
+
+				case 'after-sabbath':
+					afterSabbath = true
+					break;
+					
+				default:
+					break;
+			}
+		}
+
 		getTimes().then(([closingSunset, openingSunset]) => {
 			
 			// Set guard times
 			const closing = getGuardTime(closingSunset, 'closing')
 			const opening = getGuardTime(openingSunset, 'opening')
 
-			let preparationDay = false
-			let bannerUp = false
-			let duringSabbath = false
-			let afterSabbath = false
-
-			// Check if we are simulating the time
-			if (options.simulateTime) {
-				switch (options.simulateTime) {
-					case 'preparation-day':
-						preparationDay = true
-						break;
-
-					case 'banner-up':
-						bannerUp = true
-						break;
-
-					case 'during-sabbath':
-						duringSabbath = true
-						break;
-
-					case 'after-sabbath':
-						afterSabbath = true
-						break;
-						
-					default:
-						break;
-				}
-			} else {
+			if (!options.simulateTime) {
+				// Set time checks
 				preparationDay = now < getMessageTime(closing)
 				bannerUp = now > getMessageTime(closing) && now < closing
-				duringSabbath = now >= closing && now <= opening && now.weekday >= closingDayNumber
-				afterSabbath = now > opening && now >= openingDayNumber
+				duringSabbath = now >= closing && now <= opening && now.weekday >= getClosingDayNumber()
+				afterSabbath = now > opening && now >= getOpeningDayNumber()
 			}
 		
 			// Is is during the week before the time to show the banner?
@@ -442,11 +459,13 @@ const SunsetToSunset = (() => {
 				console.group(`Sunset to Sunset times`)
 				console.table(times)
 				console.groupEnd()
-  
+		
 			}
-
 		})
 	} else {
+		// Unhide `html` after we determine what things need to be rendered.
+		html.style.display = "block"
+		
 		console.log('Sunset to Sunset: Exiting because today is not closing day')
 	}
 

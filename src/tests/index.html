@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
 	<script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js"></script>
-	<script type="module" src="../js/main.js"></script>
+	<script type="module" src="../js/sunset-to-sunset.js"></script>
 </head>
 
 <body>
@@ -841,17 +841,17 @@
 				"lat": 35.750413,
 				"long": -87.229406
 			},
-			"messageDuration": {
+			"bannerDuration": {
 				"hours": 0,
 				"minutes": 30
 			},
 			"guardDuration": {
-				"hours": -1,
-				"minutes": -5
+				"hours": 3,
+				"minutes": 50
 			},
 			"debug": true,
-			"simulateTime": "during-sabbath"
-		}'>
+			"simulateTime": "banner-up"
+		}' data-days='{ "closing": 1, "opening": 2 }'>
 	</template>
 	<template id="sts-banner-template-">
 		<div class="sts-banner">
@@ -905,7 +905,7 @@
 			</ul>
 		</div>
 	</template>
-	<template id="sts-full-message-template">
+	<template id="sts-message-template">
 		<p>
 			In a world that seems to be spinning faster every day, we choose to stop
 			and rest every Sabbath (Saturday). It’s a day for us to relax, refresh,

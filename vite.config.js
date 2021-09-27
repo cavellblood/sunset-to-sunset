@@ -11,7 +11,7 @@ export default ({ command }) => ({
 		outDir: "../dist/",
 		rollupOptions: {
 			input: {
-				"sunset-to-sunset": "./src/js/main.js",
+				"sunset-to-sunset": "./src/js/sunset-to-sunset.js",
 				test: "./src/tests/index.html",
 			},
 			output: {
