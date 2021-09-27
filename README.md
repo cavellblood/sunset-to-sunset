@@ -1,6 +1,10 @@
 # Sunset to Sunset
 This script was developed to help with closing down of a website from sunset on Friday to sunset on Saturday. It displays a banner leading up to the Sabbath notifying visitors of the site when it will not be available.
 
+## Features
+- Automatically show a banner on the top of your site notifying visitors when your site will close.
+- Show a message during the Sabbath hours letting visitors know why you are closed and when your site will be back online.
+
 ## Dependencies
 The Sunset to Sunset script is dependent on a date time library called [Luxon](https://moment.github.io/luxon/#/) to calculate closing and opening times based off of the sunset times at the location that is entered. A goal is to eventually include this in the Sunset to Sunset script to avoid the need to load two separate scripts.
 
