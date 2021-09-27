@@ -21,28 +21,28 @@ Whichever method you choose, either **Download** or **CDN**, it’s best to incl
 <html lang="en">
 
 <head>
-	<!-- ... -->
+  <!-- ... -->
 
-	<!-- Luxon library -->
-	<script src="YOUR/PATH/HERE/luxon.min.js"></script>
-	
-	<!-- Safari 10.1 `nomodule` fix script (https://gist.github.com/samthor/64b114e4a4f539915a95b91ffd340acc) -->
-	<!-- This can be omitted if you don't have many users of Safari 10.1 in your target audience. -->
-	<script>
-		!function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()},!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();
-	</script>
+  <!-- Luxon library -->
+  <script src="YOUR/PATH/HERE/luxon.min.js"></script>
+  
+  <!-- Safari 10.1 `nomodule` fix script (https://gist.github.com/samthor/64b114e4a4f539915a95b91ffd340acc) -->
+  <!-- This can be omitted if you don't have many users of Safari 10.1 in your target audience. -->
+  <script>
+    !function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()},!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();
+  </script>
 
-	<!-- Legacy bundle for outdated browser support. -->
-	<script type="nomodule" src="YOUR/PATH/HERE/polyfills-legacy.53eda98a.js"></script>
+  <!-- Legacy bundle for outdated browser support. -->
+  <script type="nomodule" src="YOUR/PATH/HERE/polyfills-legacy.53eda98a.js"></script>
 
-	<!-- Sunset to Sunset javascript -->
-	<script type="module" src="YOUR/PATH/HERE/sunset-to-sunset.min.js" crossorigin></script>
+  <!-- Sunset to Sunset javascript -->
+  <script type="module" src="YOUR/PATH/HERE/sunset-to-sunset.min.js" crossorigin></script>
 
-	<!-- Sunset to Sunset stylesheet -->
-	<link href="YOUR/PATH/HERE/sunset-to-sunset.css" rel="stylesheet" media="print" onload="this.media='all'">
-	
-	<!-- Sunset to Sunset javascript for legacy browsers -->
-	<script type="nomodule" src="YOUR/PATH/HERE/sunset-to-sunset-legacy.min.js"></script>
+  <!-- Sunset to Sunset stylesheet -->
+  <link href="YOUR/PATH/HERE/sunset-to-sunset.css" rel="stylesheet" media="print" onload="this.media='all'">
+  
+  <!-- Sunset to Sunset javascript for legacy browsers -->
+  <script type="nomodule" src="YOUR/PATH/HERE/sunset-to-sunset-legacy.min.js"></script>
   </head>
 
 <body>
@@ -55,28 +55,28 @@ Link directly to the Sunset to Sunset files on [unpkg](https://unpkg.com/).
 <html lang="en">
 
 <head>
-	<!-- ... -->
+  <!-- ... -->
 
-	<!-- Luxon library -->
-	<script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js"></script>
-	
-	<!-- Safari 10.1 `nomodule` fix script (https://gist.github.com/samthor/64b114e4a4f539915a95b91ffd340acc) -->
-	<!-- This can be omitted if you don't have many users of Safari 10.1 in your target audience. -->
-	<script>
-		!function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()},!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();
-	</script>
+  <!-- Luxon library -->
+  <script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js"></script>
+  
+  <!-- Safari 10.1 `nomodule` fix script (https://gist.github.com/samthor/64b114e4a4f539915a95b91ffd340acc) -->
+  <!-- This can be omitted if you don't have many users of Safari 10.1 in your target audience. -->
+  <script>
+    !function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()},!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();
+  </script>
 
-	<!-- Legacy bundle for outdated browser support. -->
-	<script type="nomodule" src="https://unpkg.com/sunset-to-sunset@1.0.3/dist/assets/polyfills-legacy.53eda98a.js"></script>
+  <!-- Legacy bundle for outdated browser support. -->
+  <script type="nomodule" src="https://unpkg.com/sunset-to-sunset@1.0.3/dist/assets/polyfills-legacy.53eda98a.js"></script>
 
-	<!-- Sunset to Sunset javascript -->
-	<script type="module" src="https://unpkg.com/sunset-to-sunset@1.0.3/dist/assets/sunset-to-sunset.min.js" crossorigin></script>
+  <!-- Sunset to Sunset javascript -->
+  <script type="module" src="https://unpkg.com/sunset-to-sunset@1.0.3/dist/assets/sunset-to-sunset.min.js" crossorigin></script>
 
-	<!-- Sunset to Sunset stylesheet -->
-	<link href="https://unpkg.com/sunset-to-sunset@1.0.3/dist/assets/sunset-to-sunset.css" rel="stylesheet" media="print" onload="this.media='all'">
-	
-	<!-- Sunset to Sunset javascript for legacy browsers -->
-	<script type="nomodule" src="https://unpkg.com/sunset-to-sunset@1.0.3/dist/assets/sunset-to-sunset-legacy.min.js"></script>
+  <!-- Sunset to Sunset stylesheet -->
+  <link href="https://unpkg.com/sunset-to-sunset@1.0.3/dist/assets/sunset-to-sunset.css" rel="stylesheet" media="print" onload="this.media='all'">
+  
+  <!-- Sunset to Sunset javascript for legacy browsers -->
+  <script type="nomodule" src="https://unpkg.com/sunset-to-sunset@1.0.3/dist/assets/sunset-to-sunset-legacy.min.js"></script>
   </head>
 
 <body>
@@ -123,11 +123,11 @@ This is the most flexible formatting option as it allows you to define the order
 With this option you can't arrange the parts of the date and time but you can decide how they are formatted. To use the `locale` format include the [special closing and opening time tags](#special-template-tags) with a `data-format-locale` like the following:
 ``` html
 <span class="sts-closing-time" data-format-locale='{ 
-	"weekday": "long",
-	"month": "long",
-	"hour": "numeric",
-	"minute": "numeric",
-	"timeZoneName": "short"
+  "weekday": "long",
+  "month": "long",
+  "hour": "numeric",
+  "minute": "numeric",
+  "timeZoneName": "short"
 }'></span>
 
 <!-- Output: September Monday, 7:44 PM CDT -->
@@ -146,12 +146,12 @@ To define your custom banner template add the following snippet to your page, pr
 
 ``` html
 <template id="sts-banner-template">
-	<div class="sts-banner  YOUR-CUSTOM-CLASSES-HERE">
-		Our store will be closing at 
-		<span class="sts-closing-time"></span>
-		<span>and will re-open on</span>
-		<span class="sts-opening-time"></span>
-	</div>
+  <div class="sts-banner  YOUR-CUSTOM-CLASSES-HERE">
+    Our store will be closing at 
+    <span class="sts-closing-time"></span>
+    <span>and will re-open on</span>
+    <span class="sts-opening-time"></span>
+  </div>
 </template>
 ```
 
@@ -161,9 +161,9 @@ If you want to just set a paragraph or two of text to appear during Sabbath then
 To define your custom message template add the following snippet to your page, preferrably in the `<head>` tag:
 ``` html
 <template id="sts-message-template">
-	<p>
-		Your message here
-	</p>
+  <p>
+    Your message here
+  </p>
 </template>
 ```
 
@@ -173,17 +173,17 @@ If you want to have full control over the appearance and layout of the message t
 To define your custom message template add the following snippet to your page, preferrably in the `<head>` tag:
 ``` html
 <template id="sts-full-message-template">
-	<div class="your-custom-layout-class">
-		<div class="your-message-area">
-			<h1 class="your-message__heading">Sabbath</h1>
-			<p>Message here</p>
-		</div>
-		<div class="your-custom-time-area">
-			<p>
-				We will re-open on <strong><span class="sts-opening-time"></span>.</strong>
-			</p>
-		</div>
-	</div>
+  <div class="your-custom-layout-class">
+    <div class="your-message-area">
+      <h1 class="your-message__heading">Sabbath</h1>
+      <p>Message here</p>
+    </div>
+    <div class="your-custom-time-area">
+      <p>
+        We will re-open on <strong><span class="sts-opening-time"></span>.</strong>
+      </p>
+    </div>
+  </div>
 </template>
 ```
 
@@ -192,12 +192,12 @@ The settings are defined with an html `template` element. The template must have
 
 ``` html
 <template 
-	id="sts-settings" 
-	data-settings='{
-		"location": {
-			"lat": 35.7686615,
-			"long": -87.4871698
-		}
+  id="sts-settings" 
+  data-settings='{
+    "location": {
+      "lat": 35.7686615,
+      "long": -87.4871698
+    }
 }'></template>
 ```
 
@@ -226,8 +226,8 @@ You can pass an object of configuration options with the `data-settings` attribu
 - **Example:** If the sun set on Friday at 8:00pm and on Saturday at 8:02pm this would calculate the closing guard time at 5:15pm on Friday and the opening time at 10:47pm on Saturday:
   ``` json
   "guardDuration": {
-	  "hours": 2,
-	  "minutes": 45
+    "hours": 2,
+    "minutes": 45
   }
   ```
 
@@ -239,8 +239,8 @@ You can pass an object of configuration options with the `data-settings` attribu
 - **Example:** This would show the banner 3 hours and 3 minutes before the calculated closing guard time determined by the `guardDuration` option:
   ``` json
   "bannerDuration": {
-	  "hours": 3,
-	  "minutes": 30
+    "hours": 3,
+    "minutes": 30
   }
   ```
 
