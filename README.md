@@ -134,14 +134,15 @@ With this option you can't arrange the parts of the date and time but you can de
 ```
 
 #### Default
-Include the [special closing and opening time tags](#special-template-tags) with no `data-format-locale` or `data-format-token` attributes and it will output the times with the token format.
-``` json
-"cccc, LLLL d 'at' h:mm a ZZZZ"  // Output: Monday, September 27 at 7:44 PM CDT
+Include the [special closing and opening time tags](#special-template-tags) with no `data-format-locale` or `data-format-token` attributes and it will output the times with the token format of `cccc, LLLL d 'at' h:mm a ZZZZ`:
+``` html
+<span class="sts-closing-time"></span>
+
+<!-- Output: Monday, September 27 at 7:44 PM CDT -->
 ```
 
 ### Banner Template
 To define your custom banner template add the following snippet to your page, preferrably in the `<head>` tag.
-
 
 ``` html
 <template id="sts-banner-template">
@@ -151,6 +152,30 @@ To define your custom banner template add the following snippet to your page, pr
 		<span>and will re-open on</span>
 		<span class="sts-opening-time"></span>
 	</div>
+</template>
+```
+
+### Simple Message Template
+If you want to just set a paragraph or two of text to appear during Sabbath then this is the template you'll want to use. 
+
+To define your custom message template add the following snippet to your page, preferrably in the `<head>` tag:
+``` html
+<template id="sts-message-template">
+	<p>
+		Your message here
+	</p>
+</template>
+```
+
+### Full Message Template
+If you want to have full control over the appearance and layout of the message then you'll want to use the full message template. Everything inside of this template will be output into the `<div class="sts-full-message__container">`. You will need to supply your own custom styling to add padding and centering of your message.
+
+To define your custom message template add the following snippet to your page, preferrably in the `<head>` tag:
+``` html
+<template id="sts-full-message-template">
+	<p>
+		Your message here
+	</p>
 </template>
 ```
 
