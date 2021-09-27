@@ -108,17 +108,14 @@ You can pass an object of configuration options with the `data-settings` attribu
 ### `location`
 - **Type:** `Object`
 - **Default:** `{ "lat": 0, "long": 0 }`
-- **Description:** An object defining the latitude and longitude of the location to calculate the sunset times.
-
-#### `location.lat`
-- **Type:** `Number`
-- **Default:** `0`
-- **Description:** The latitude of the location to calculate the sunset times.
-
-#### `location.long`
-- **Type:** `Number`
-- **Default:** `0`
-- **Description:** The longitude of the location to calculate the sunset times.
+- **Description:** An object defining the latitude and longitude of the location to calculate the sunset times. Both keys `lat` and `long` are expected to be of the `Number` type.
+- **Example:**
+  ``` json
+  "location": {
+    "lat": 35.7686615,
+    "long": -87.4871698
+  }
+  ```
 
 ### `guardDuration`
 - **Type:** `Object`
