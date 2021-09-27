@@ -173,8 +173,8 @@ const SunsetToSunset = (() => {
 		guardDuration: {
 			minutes: 30
 		},
-		messageDuration: {
-			minutes: 60
+		bannerDuration: {
+			hours: 3,
 		},
 		location: {
 			lat: 0,
@@ -261,8 +261,8 @@ const SunsetToSunset = (() => {
 	}
 	
 	// Get message minutes
-	const getMessageDuration = () => {
-		let duration = Duration.fromObject(options.messageDuration)
+	const getBannerDuration = () => {
+		let duration = Duration.fromObject(options.bannerDuration)
 		
 		return duration
 	}
@@ -274,7 +274,7 @@ const SunsetToSunset = (() => {
 	
 	//Get message time
 	const getMessageTime = (date) => {
-		return date.minus(getMessageDuration())
+		return date.minus(getBannerDuration())
 	}
 	
 	// Get guard time. `date` is a Luxon DateTime object.
