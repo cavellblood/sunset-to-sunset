@@ -160,14 +160,29 @@ const SunsetToSunset = (() => {
 		'Time': now.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
 	}
 
+	// Get options set in HTML
+	const stsContainer = document.querySelector('template#sts-settings')
+	let days = {}
+
+	if (stsContainer.dataset.days) {
+		days = JSON.parse(stsContainer.dataset.days)
+	}
+
+	// Set day of week: zero-based index
+	const dayDefaults = {
+		closing: 5,
+		opening: 6
+	}
+
+	// Merge days with dayDefaults
+	days = extend(extend({}, dayDefaults), days)
+
 	const getClosingDayNumber = () => {
-		// Set day of week: zero-based index
-		return 5
+		return days.closing
 	}
 	
 	const getOpeningDayNumber = () => {
-		// Set day of week: zero-based index
-		return 6
+		return days.opening
 	}
 
 	const activateSunsetWatch = now.weekday == getClosingDayNumber() || now.weekday == getOpeningDayNumber()
@@ -189,14 +204,16 @@ const SunsetToSunset = (() => {
 		debug: false
 	}
 	
-	// Get options set in HTML
-	const stsContainer = document.querySelector('template#sts-settings')
-	let options = stsContainer != null ? JSON.parse(stsContainer.dataset.settings) : {}
+	let options = {}
 	
-	const html = document.getElementsByTagName('html')[0]
+	if (stsContainer.dataset.settings) {
+		options = JSON.parse(stsContainer.dataset.settings)
+	}
 	
 	// Merge options with defaults
 	options = extend(extend({}, defaults), options)
+
+	const html = document.getElementsByTagName('html')[0]
 
 	// Hide `html` until we have determined what things need to be rendered.
 	if (activateSunsetWatch || options.simulateTime) {
