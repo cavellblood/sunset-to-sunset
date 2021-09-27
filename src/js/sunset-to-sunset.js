@@ -166,8 +166,7 @@ const SunsetToSunset = (() => {
 
 	const activateSunsetWatch = now.weekday == closingDayNumber || now.weekday == openingDayNumber
 
-	const html = document.getElementsByTagName('html')[0]
-
+	
 	// Set default options
 	const defaults = {
 		guardDuration: {
@@ -187,6 +186,8 @@ const SunsetToSunset = (() => {
 	// Get options set in HTML
 	const stsContainer = document.querySelector('template#sts-settings')
 	let options = stsContainer != null ? JSON.parse(stsContainer.dataset.settings) : {}
+	
+	const html = document.getElementsByTagName('html')[0]
 	
 	// Merge options with defaults
 	options = extend(extend({}, defaults), options)
