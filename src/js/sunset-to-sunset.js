@@ -147,10 +147,6 @@ const SunsetToSunset = (() => {
 
 	console.log(`Intializing Sunset to Sunset...`);
 
-	// Set day of week: zero-based index
-	const closingDayNumber = 5
-	const openingDayNumber = 6
-
 	const DateTime = luxon.DateTime
 	const Duration = luxon.Duration
 
@@ -164,7 +160,17 @@ const SunsetToSunset = (() => {
 		'Time': now.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
 	}
 
-	const activateSunsetWatch = now.weekday == closingDayNumber || now.weekday == openingDayNumber
+	const getClosingDayNumber = () => {
+		// Set day of week: zero-based index
+		return 5
+	}
+	
+	const getOpeningDayNumber = () => {
+		// Set day of week: zero-based index
+		return 6
+	}
+
+	const activateSunsetWatch = now.weekday == getClosingDayNumber() || now.weekday == getOpeningDayNumber()
 
 	
 	// Set default options
@@ -230,7 +236,7 @@ const SunsetToSunset = (() => {
 		if (options.simulateTime) {
 			daysToClosing = 0
 		} else {
-			daysToClosing = closingDayNumber - now.weekday
+			daysToClosing = getClosingDayNumber() - now.weekday
 		}
 
 		const closingDate = DateTime.fromISO(now.plus({
@@ -249,7 +255,7 @@ const SunsetToSunset = (() => {
 		if (options.simulateTime) {
 			daysToOpening = 1
 		} else {
-			daysToOpening = openingDayNumber - now.weekday
+			daysToOpening = getOpeningDayNumber() - now.weekday
 		}
 
 		const openingDate = DateTime.fromISO(now.plus({
@@ -342,8 +348,8 @@ const SunsetToSunset = (() => {
 			} else {
 				preparationDay = now < getMessageTime(closing)
 				bannerUp = now > getMessageTime(closing) && now < closing
-				duringSabbath = now >= closing && now <= opening && now.weekday >= closingDayNumber
-				afterSabbath = now > opening && now >= openingDayNumber
+				duringSabbath = now >= closing && now <= opening && now.weekday >= getClosingDayNumber()
+				afterSabbath = now > opening && now >= getOpeningDayNumber()
 			}
 		
 			// Is is during the week before the time to show the banner?
