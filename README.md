@@ -13,12 +13,12 @@ Whichever method you choose, either **Download** or **CDN**, it’s best to incl
 
 ### Download
 - **CSS**
-  - [sunset-to-sunset.css](https://unpkg.com/sunset-to-sunset@1.0.3/dist/assets/sunset-to-sunset.css), minified
+  - [sunset-to-sunset.css](https://unpkg.com/sunset-to-sunset@1.0.4/dist/assets/sunset-to-sunset.css), minified
 - **Javascript**
   - [luxon.min.js](https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js), minified library for working with dates and times in JavaScript.
-  - [polyfills-legacy.53eda98a.js](https://unpkg.com/sunset-to-sunset@1.0.3/dist/assets/polyfills-legacy.53eda98a.js), legacy bundle for outdated browser support.
-  - [sunset-to-sunset.min.js](https://unpkg.com/sunset-to-sunset@1.0.3/dist/assets/sunset-to-sunset.min.js), minified
-  - [sunset-to-sunset-legacy.min.js](https://unpkg.com/sunset-to-sunset@1.0.3/dist/assets/sunset-to-sunset-legacy.min.js), minified for legacy browsers
+  - [polyfills-legacy.53eda98a.js](https://unpkg.com/sunset-to-sunset@1.0.4/dist/assets/polyfills-legacy.53eda98a.js), legacy bundle for outdated browser support.
+  - [sunset-to-sunset.min.js](https://unpkg.com/sunset-to-sunset@1.0.4/dist/assets/sunset-to-sunset.min.js), minified
+  - [sunset-to-sunset-legacy.min.js](https://unpkg.com/sunset-to-sunset@1.0.4/dist/assets/sunset-to-sunset-legacy.min.js), minified for legacy browsers
 
 ``` html
 <!DOCTYPE html>
@@ -71,16 +71,16 @@ Link directly to the Sunset to Sunset files on [unpkg](https://unpkg.com/).
   </script>
 
   <!-- Legacy bundle for outdated browser support. -->
-  <script type="nomodule" src="https://unpkg.com/sunset-to-sunset@1.0.3/dist/assets/polyfills-legacy.53eda98a.js"></script>
+  <script type="nomodule" src="https://unpkg.com/sunset-to-sunset@1.0.4/dist/assets/polyfills-legacy.53eda98a.js"></script>
 
   <!-- Sunset to Sunset javascript -->
-  <script type="module" src="https://unpkg.com/sunset-to-sunset@1.0.3/dist/assets/sunset-to-sunset.min.js" crossorigin></script>
+  <script type="module" src="https://unpkg.com/sunset-to-sunset@1.0.4/dist/assets/sunset-to-sunset.min.js" crossorigin></script>
 
   <!-- Sunset to Sunset stylesheet -->
-  <link href="https://unpkg.com/sunset-to-sunset@1.0.3/dist/assets/sunset-to-sunset.css" rel="stylesheet" media="print" onload="this.media='all'">
+  <link href="https://unpkg.com/sunset-to-sunset@1.0.4/dist/assets/sunset-to-sunset.css" rel="stylesheet" media="print" onload="this.media='all'">
   
   <!-- Sunset to Sunset javascript for legacy browsers -->
-  <script type="nomodule" src="https://unpkg.com/sunset-to-sunset@1.0.3/dist/assets/sunset-to-sunset-legacy.min.js"></script>
+  <script type="nomodule" src="https://unpkg.com/sunset-to-sunset@1.0.4/dist/assets/sunset-to-sunset-legacy.min.js"></script>
   </head>
 
 <body>

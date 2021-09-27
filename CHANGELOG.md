@@ -4,9 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## 1.0.4 - 2021-09-27
 ### Added
-- Added `README.md`
+- Added `README.md`.
+- Added the option to set the closing and opening days via html for debugging purposes.
+
+### Fixed
+- Fixed an issue where you really couldn't see what time it would close on the upcoming closing day when simulating the time.
 
 ## 1.0.3 - 2021-09-26
 ### Fixed
