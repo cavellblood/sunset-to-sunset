@@ -87,6 +87,19 @@ Link directly to the Sunset to Sunset files on [unpkg](https://unpkg.com/).
 Sunset to sunset needs some initial configuration needed for it to work correctly for your location.
 
 ### Defining the Settings
+The settings are defined with an html `template` element like so:
+
+``` html
+<template 
+	id="sts-settings" 
+	data-settings='{
+		"location": {
+			"lat": 35.750413,
+			"long": -87.229406
+		}
+}'></template>
+```
+
 
 
 
