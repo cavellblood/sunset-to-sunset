@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased - 2021-10-15
+## 1.0.5 - 2021-10-15
 ### Changed
 - Updated the test file settings to show a more syntax-safe JSON object.
 
