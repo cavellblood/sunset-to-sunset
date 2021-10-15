@@ -216,13 +216,6 @@ const SunsetToSunset = (() => {
 	// Merge options with defaults
 	options = extend(extend({}, defaults), options)
 
-	const html = document.getElementsByTagName('html')[0]
-
-	// Hide `html` until we have determined what things need to be rendered.
-	if (activateSunsetWatch || options.simulateTime) {
-		html.style.display = "none";
-	}
-
 	if (options.simulateTime) {
 		console.warn('%cThe `simulateTime` option is enabled for the Sunset to Sunset plugin. Remember to disable this option once you are done verifying the settings.', 'font-size: 16px')
 	}
@@ -413,9 +406,6 @@ const SunsetToSunset = (() => {
 
 			}
 
-			// Unhide `html` after we determine what things need to be rendered.
-			html.style.display = "block"
-
 			if (options.debug) {
 
 				let checks = {
@@ -463,9 +453,6 @@ const SunsetToSunset = (() => {
 			}
 		})
 	} else {
-		// Unhide `html` after we determine what things need to be rendered.
-		html.style.display = "block"
-		
 		console.log('Sunset to Sunset: Exiting because today is not closing day')
 	}
 
