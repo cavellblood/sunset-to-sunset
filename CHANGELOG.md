@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.0.5 - 2021-10-15
+### Changed
+- Updated the test file settings to show a more syntax-safe JSON object.
+
+### Fixed
+- Script will not hide the `html` element while it's determining if it should render a message.
+
 ## 1.0.4 - 2021-09-27
 ### Added
 - Added `README.md`.
