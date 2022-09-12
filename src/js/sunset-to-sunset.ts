@@ -1,8 +1,5 @@
 import "../css/style.css";
-
-const extend = (a, b) => {
-  return Object.assign(a, b);
-};
+import { DateTime, Duration } from "luxon";
 
 const renderBanner = (closing, opening) => {
   const userDefinedTemplate = document.querySelector(
@@ -154,9 +151,6 @@ const formatTimes = (elements, time) => {
 const SunsetToSunset = (() => {
   console.log(`Intializing Sunset to Sunset...`);
 
-  const DateTime = luxon.DateTime;
-  const Duration = luxon.Duration;
-
   const now = DateTime.now();
 
   // Keep track of calculated times
@@ -185,7 +179,7 @@ const SunsetToSunset = (() => {
   };
 
   // Merge days with dayDefaults
-  days = extend(extend({}, dayDefaults), days);
+  days = Object.assign(Object.assign({}, dayDefaults), days);
 
   const getClosingDayNumber = () => {
     return days.closing;
@@ -222,7 +216,7 @@ const SunsetToSunset = (() => {
   }
 
   // Merge options with defaults
-  options = extend(extend({}, defaults), options);
+  options = Object.assign(Object.assign({}, defaults), options);
 
   if (options.simulateTime) {
     console.warn(
