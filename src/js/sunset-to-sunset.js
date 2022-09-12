@@ -1,55 +1,63 @@
-import '../css/style.css'
+import "../css/style.css";
 
 const extend = (a, b) => {
-	return Object.assign(a, b)
-}
+  return Object.assign(a, b);
+};
 
 const renderBanner = (closing, opening) => {
-	const userDefinedTemplate = document.querySelector('template#sts-banner-template')
+  const userDefinedTemplate = document.querySelector(
+    "template#sts-banner-template"
+  );
 
-	let template
-	
-	if (userDefinedTemplate) {
-		template = userDefinedTemplate
-	} else {
-		let defaultBannerTemplate = document.createElement("template")
-		
-		defaultBannerTemplate.innerHTML = `
+  let template;
+
+  if (userDefinedTemplate) {
+    template = userDefinedTemplate;
+  } else {
+    let defaultBannerTemplate = document.createElement("template");
+
+    defaultBannerTemplate.innerHTML = `
 			<div class="sts-banner">
 				Because of religious beliefs our store will be closed over the Sabbath hours.
 				Closing on <span class="sts-closing-time"></span> and will re-open on <span class="sts-opening-time"></span>.
 			</div>
-		`
-		template = defaultBannerTemplate
-	}
+		`;
+    template = defaultBannerTemplate;
+  }
 
-	const banner = template.content.cloneNode(true)
+  const banner = template.content.cloneNode(true);
 
-	// Find all closing elements and add formatted times
-	const closingElements = banner.querySelectorAll('.sts-closing-time')
-	formatTimes(closingElements, closing)
+  // Find all closing elements and add formatted times
+  const closingElements = banner.querySelectorAll(".sts-closing-time");
+  formatTimes(closingElements, closing);
 
-	// Find all opening elements and add formatted times
-	const openingElements = banner.querySelectorAll('.sts-opening-time')
-	formatTimes(openingElements, opening)
-	
-	// Insert the banner as the first item on the page.
-	document.body.insertBefore(banner, document.body.firstChild)
-}
+  // Find all opening elements and add formatted times
+  const openingElements = banner.querySelectorAll(".sts-opening-time");
+  formatTimes(openingElements, opening);
+
+  // Insert the banner as the first item on the page.
+  document.body.insertBefore(banner, document.body.firstChild);
+};
 
 const renderMessage = (opening) => {
-	const userFullTemplate = document.querySelector('template#sts-full-message-template')
-	const userSimpleTemplate = document.querySelector('template#sts-message-template')
-	const userDefinedTemplate = userFullTemplate ? userFullTemplate : userSimpleTemplate
+  const userFullTemplate = document.querySelector(
+    "template#sts-full-message-template"
+  );
+  const userSimpleTemplate = document.querySelector(
+    "template#sts-message-template"
+  );
+  const userDefinedTemplate = userFullTemplate
+    ? userFullTemplate
+    : userSimpleTemplate;
 
-	let message
+  let message;
 
-	if (userDefinedTemplate) {
-		message = userDefinedTemplate.content.cloneNode(true)
-		message = message.firstElementChild
-	} else {
-		let messageHolder = document.createElement("div")
-		messageHolder.innerHTML = `
+  if (userDefinedTemplate) {
+    message = userDefinedTemplate.content.cloneNode(true);
+    message = message.firstElementChild;
+  } else {
+    let messageHolder = document.createElement("div");
+    messageHolder.innerHTML = `
 			<p>
 				In a world that seems to be spinning faster every day, we choose to stop 
 				and rest every Sabbath (Saturday). It’s a day for us to relax, refresh, 
@@ -58,13 +66,13 @@ const renderMessage = (opening) => {
 				(knowing we probably wouldn’t do it otherwise—even though it is for 
 				our best good).
 			</p>
-		`
+		`;
 
-		message = messageHolder
-	}
+    message = messageHolder;
+  }
 
-	let template = document.createElement("template")
-	template.innerHTML = `
+  let template = document.createElement("template");
+  template.innerHTML = `
 		<div class="sts-full-message__container">
 
 			<div class="sts-layout  sts-modal">
@@ -79,382 +87,397 @@ const renderMessage = (opening) => {
 			</div>
 		
 		</div>
-	`
+	`;
 
-	const messageTemplate = template.content.cloneNode(true)
+  const messageTemplate = template.content.cloneNode(true);
 
-	if (userFullTemplate) {
-		let messageContainer = messageTemplate.querySelector('.sts-full-message__container');
+  if (userFullTemplate) {
+    let messageContainer = messageTemplate.querySelector(
+      ".sts-full-message__container"
+    );
 
-		while (messageContainer.firstElementChild) {
-			messageContainer.removeChild(messageContainer.firstChild)
-		}
+    while (messageContainer.firstElementChild) {
+      messageContainer.removeChild(messageContainer.firstChild);
+    }
 
-		messageContainer.insertBefore(message, null)
+    messageContainer.insertBefore(message, null);
+  } else if (userSimpleTemplate) {
+    const messageArea = messageTemplate.querySelector(".sts-message-area");
+    messageArea.insertBefore(message, null);
+  }
 
-	} else if (userSimpleTemplate) {
-		const messageArea = messageTemplate.querySelector('.sts-message-area');
-		messageArea.insertBefore(message, null)
-	}
+  const html = document.getElementsByTagName("html")[0];
+  html.classList.add("sts-during-sabbath");
 
+  // Find all opening elements and add formatted times
+  const openingElements = messageTemplate.querySelectorAll(".sts-opening-time");
+  formatTimes(openingElements, opening);
 
-	const html = document.getElementsByTagName('html')[0]
-	html.classList.add('sts-during-sabbath')
-
-	// Find all opening elements and add formatted times
-	const openingElements = messageTemplate.querySelectorAll('.sts-opening-time')
-	formatTimes(openingElements, opening)
-	
-	// Insert the messageTemplate as the first item on the page.
-	document.body.insertBefore(messageTemplate, document.body.firstChild)
-}
+  // Insert the messageTemplate as the first item on the page.
+  document.body.insertBefore(messageTemplate, document.body.firstChild);
+};
 
 const formatTimes = (elements, time) => {
-	const defaultFormats = {
-		locale: {
-			"weekday": "long",
-			"month": "long",
-			"hour": "numeric",
-			"minute": "numeric",
-			"timeZoneName": "short"
-		},
-		token: "cccc, LLLL d 'at' h:mm a ZZZZ"
-	}
+  const defaultFormats = {
+    locale: {
+      weekday: "long",
+      month: "long",
+      hour: "numeric",
+      minute: "numeric",
+      timeZoneName: "short",
+    },
+    token: "cccc, LLLL d 'at' h:mm a ZZZZ",
+  };
 
-	for (let index = 0; index < elements.length; index++) {
-		const el = elements[index];
-		
-		const elFormatToken  = el.dataset.formatToken
-		const elFormatLocale = el.dataset.formatLocale
-		let formatted
-	
-		if (elFormatToken) {
-			// Use token format first (https://moment.github.io/luxon/#/formatting?id=table-of-tokens)
-			formatted = time.toFormat(elFormatToken)
-		} else if (elFormatLocale) {
-			// Use locale format
-			formatted = time.toLocaleString(JSON.parse(elFormatLocale))
-		} else {
-			formatted = time.toFormat(defaultFormats.token)
-		}
+  for (let index = 0; index < elements.length; index++) {
+    const el = elements[index];
 
-		// Set the content of the element to the formatted time.
-		el.textContent = formatted
-	}
-}
+    const elFormatToken = el.dataset.formatToken;
+    const elFormatLocale = el.dataset.formatLocale;
+    let formatted;
+
+    if (elFormatToken) {
+      // Use token format first (https://moment.github.io/luxon/#/formatting?id=table-of-tokens)
+      formatted = time.toFormat(elFormatToken);
+    } else if (elFormatLocale) {
+      // Use locale format
+      formatted = time.toLocaleString(JSON.parse(elFormatLocale));
+    } else {
+      formatted = time.toFormat(defaultFormats.token);
+    }
+
+    // Set the content of the element to the formatted time.
+    el.textContent = formatted;
+  }
+};
 
 const SunsetToSunset = (() => {
+  console.log(`Intializing Sunset to Sunset...`);
 
-	console.log(`Intializing Sunset to Sunset...`);
+  const DateTime = luxon.DateTime;
+  const Duration = luxon.Duration;
 
-	const DateTime = luxon.DateTime
-	const Duration = luxon.Duration
+  const now = DateTime.now();
 
-	const now = DateTime.now()
+  // Keep track of calculated times
+  let times = {};
 
-	// Keep track of calculated times
-	let times = {}
+  times["Current Time"] = {
+    Date: now.toLocaleString(DateTime.DATE_FULL),
+    Time: now.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
+  };
 
-	times["Current Time"] = {
-		'Date': now.toLocaleString(DateTime.DATE_FULL),
-		'Time': now.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
-	}
+  // Get options set in HTML
+  const stsContainer = document.querySelector("template#sts-settings");
+  let days = {};
 
-	// Get options set in HTML
-	const stsContainer = document.querySelector('template#sts-settings')
-	let days = {}
+  // Mainly for debugging purposes you can set the closing and opening day number
+  // so the plugin activates on the day you are testing it for example instead of
+  // needing to wait until Friday to test it.
+  if (stsContainer.dataset.days) {
+    days = JSON.parse(stsContainer.dataset.days);
+  }
 
-	// Mainly for debugging purposes you can set the closing and opening day number 
-	// so the plugin activates on the day you are testing it for example instead of 
-	// needing to wait until Friday to test it.
-	if (stsContainer.dataset.days) {
-		days = JSON.parse(stsContainer.dataset.days)
-	}
+  // Set day of week: zero-based index
+  const dayDefaults = {
+    closing: 5,
+    opening: 6,
+  };
 
-	// Set day of week: zero-based index
-	const dayDefaults = {
-		closing: 5,
-		opening: 6
-	}
+  // Merge days with dayDefaults
+  days = extend(extend({}, dayDefaults), days);
 
-	// Merge days with dayDefaults
-	days = extend(extend({}, dayDefaults), days)
+  const getClosingDayNumber = () => {
+    return days.closing;
+  };
 
-	const getClosingDayNumber = () => {
-		return days.closing
-	}
-	
-	const getOpeningDayNumber = () => {
-		return days.opening
-	}
+  const getOpeningDayNumber = () => {
+    return days.opening;
+  };
 
-	const activateSunsetWatch = now.weekday == getClosingDayNumber() || now.weekday == getOpeningDayNumber()
+  const activateSunsetWatch =
+    now.weekday == getClosingDayNumber() ||
+    now.weekday == getOpeningDayNumber();
 
-	
-	// Set default options
-	const defaults = {
-		guardDuration: {
-			minutes: 30
-		},
-		bannerDuration: {
-			hours: 3,
-		},
-		location: {
-			lat: 0,
-			long: 0
-		},
-		simulateTime: false,
-		debug: false
-	}
-	
-	let options = {}
-	
-	if (stsContainer.dataset.settings) {
-		options = JSON.parse(stsContainer.dataset.settings)
-	}
-	
-	// Merge options with defaults
-	options = extend(extend({}, defaults), options)
+  // Set default options
+  const defaults = {
+    guardDuration: {
+      minutes: 30,
+    },
+    bannerDuration: {
+      hours: 3,
+    },
+    location: {
+      lat: 0,
+      long: 0,
+    },
+    simulateTime: false,
+    debug: false,
+  };
 
-	if (options.simulateTime) {
-		console.warn('%cThe `simulateTime` option is enabled for the Sunset to Sunset plugin. Remember to disable this option once you are done verifying the settings.', 'font-size: 16px')
-	}
-	
-	if (options.debug) {
-		console.group(`Sunset to Sunset intialized with the following options:`)
-		console.dir(options)
-		console.groupEnd()
-	}
-	
-	// Get location coordinates
-	const getLocation = () => {
-		return options.location;
-	}
-	
-	// Get sunset time for given date and location
-	const getSunsetTime = async (date) => {
-		const sunsetDate = date.split('T')[0]
-		const response = await fetch('https://api.sunrise-sunset.org/json?&lat=' + getLocation().lat + '&lng=' + getLocation().long + '&date=' + sunsetDate + '&formatted=0')
-		const data = await response.json();
-		const sunset = DateTime.fromISO(data.results.sunset)
+  let options = {};
 
-		return sunset
-	}
-	
-	// Get closing sunset
-	const getClosingSunset = () => {
-		let daysToClosing = getClosingDayNumber() - now.weekday
+  if (stsContainer.dataset.settings) {
+    options = JSON.parse(stsContainer.dataset.settings);
+  }
 
-		const closingDate = DateTime.fromISO(now.plus({
-			days: daysToClosing
-		})).toString()
+  // Merge options with defaults
+  options = extend(extend({}, defaults), options);
 
-		const closingSunset = getSunsetTime(closingDate);
+  if (options.simulateTime) {
+    console.warn(
+      "%cThe `simulateTime` option is enabled for the Sunset to Sunset plugin. Remember to disable this option once you are done verifying the settings.",
+      "font-size: 16px"
+    );
+  }
 
-		return closingSunset
-	}
+  if (options.debug) {
+    console.group(`Sunset to Sunset intialized with the following options:`);
+    console.dir(options);
+    console.groupEnd();
+  }
 
-	// Get opening sunset
-	const getOpeningSunset = () => {
-		let daysToOpening = getOpeningDayNumber() - now.weekday
+  // Get location coordinates
+  const getLocation = () => {
+    return options.location;
+  };
 
-		const openingDate = DateTime.fromISO(now.plus({
-			days: daysToOpening
-		})).toString()
+  // Get sunset time for given date and location
+  const getSunsetTime = async (date) => {
+    const sunsetDate = date.split("T")[0];
+    const response = await fetch(
+      "https://api.sunrise-sunset.org/json?&lat=" +
+        getLocation().lat +
+        "&lng=" +
+        getLocation().long +
+        "&date=" +
+        sunsetDate +
+        "&formatted=0"
+    );
+    const data = await response.json();
+    const sunset = DateTime.fromISO(data.results.sunset);
 
-		const openingSunset = getSunsetTime(openingDate);
+    return sunset;
+  };
 
-		return openingSunset
-	}
-	
-	// Get message minutes
-	const getBannerDuration = () => {
-		let duration = Duration.fromObject(options.bannerDuration)
-		
-		return duration
-	}
-	
-	// Get guard duration
-	const getGuardDuration = () => {
-		return options.guardDuration
-	}
-	
-	//Get message time
-	const getMessageTime = (date) => {
-		return date.minus(getBannerDuration())
-	}
-	
-	// Get guard time. `date` is a Luxon DateTime object.
-	const getGuardTime = (date, action) => {
-		let time
-		
-		if (action == 'closing') {
-			time = date.minus(getGuardDuration())
-		}
-		
-		if (action == 'opening') {
-			time = date.plus(getGuardDuration())
-		}
-		
-		return time
-	}
-	
-	const getTimes = async () => {
-		const allTimes = Promise.all([
-			getClosingSunset(),
-			getOpeningSunset()
-		])
-		
-		const times = await allTimes
-		
-		return times
-	}
-	
-	// Only run if today is Friday or Sabbath
-	if ( activateSunsetWatch || options.simulateTime) {
-		let preparationDay = false
-		let bannerUp = false
-		let duringSabbath = false
-		let afterSabbath = false
+  // Get closing sunset
+  const getClosingSunset = () => {
+    let daysToClosing = getClosingDayNumber() - now.weekday;
 
-		// Check if we are simulating the time
-		if (options.simulateTime) {
-			switch (options.simulateTime) {
-				case 'preparation-day':
-					preparationDay = true
-					break;
+    const closingDate = DateTime.fromISO(
+      now.plus({
+        days: daysToClosing,
+      })
+    ).toString();
 
-				case 'banner-up':
-					bannerUp = true
-					break;
+    const closingSunset = getSunsetTime(closingDate);
 
-				case 'during-sabbath':
-					duringSabbath = true
-					break;
+    return closingSunset;
+  };
 
-				case 'after-sabbath':
-					afterSabbath = true
-					break;
-					
-				default:
-					break;
-			}
-		}
+  // Get opening sunset
+  const getOpeningSunset = () => {
+    let daysToOpening = getOpeningDayNumber() - now.weekday;
 
-		getTimes().then(([closingSunset, openingSunset]) => {
-			
-			// Set guard times
-			const closing = getGuardTime(closingSunset, 'closing')
-			const opening = getGuardTime(openingSunset, 'opening')
+    const openingDate = DateTime.fromISO(
+      now.plus({
+        days: daysToOpening,
+      })
+    ).toString();
 
-			if (!options.simulateTime) {
-				// Set time checks
-				preparationDay = now < getMessageTime(closing)
-				bannerUp = now > getMessageTime(closing) && now < closing
-				duringSabbath = now >= closing && now <= opening && now.weekday >= getClosingDayNumber()
-				afterSabbath = now > opening && now >= getOpeningDayNumber()
-			}
-		
-			// Is is during the week before the time to show the banner?
-			if (preparationDay) {
-				// Refresh the page when it's time to show the banner.
-				const refreshTime = getMessageTime(closing).diff(now, 'milliseconds').toObject();
+    const openingSunset = getSunsetTime(openingDate);
 
-				// Don't refresh if there is a negative refresh time.
-				// This conditional is mainly here for when `simulateTime`
-				// is set to `preparation-day`.
-				if (refreshTime.milliseconds >= 0) {
-					setTimeout(() => {
-						location.reload()
-					}, refreshTime.milliseconds);
-				}
-			}
+    return openingSunset;
+  };
 
-			// Is it before closing time but the banner should be up?
-			if (bannerUp) {
-				renderBanner(closing, opening)
+  // Get message minutes
+  const getBannerDuration = () => {
+    let duration = Duration.fromObject(options.bannerDuration);
 
-				// Refresh the page when it's closing time.
-				const refreshTime = closing.diff(now, 'milliseconds').toObject();
-				
-				// Don't refresh if there is a negative refresh time.
-				// This conditional is mainly here for when `simulateTime`
-				// is set to `banner-up`.
-				if (refreshTime.milliseconds >= 0) {
-					setTimeout(() => {
-						location.reload()
-					}, refreshTime.milliseconds);
-				}
-			}
+    return duration;
+  };
 
-			// Is it during the sabbath?
-			if (duringSabbath) {
-				renderMessage(opening)
+  // Get guard duration
+  const getGuardDuration = () => {
+    return options.guardDuration;
+  };
 
-				// Refresh the page when it's opening time.
-				const refreshTime = opening.diff(now, 'milliseconds').toObject();
+  //Get message time
+  const getMessageTime = (date) => {
+    return date.minus(getBannerDuration());
+  };
 
-				if (refreshTime.milliseconds >= 0) {
-					setTimeout(() => {
-						location.reload()
-					}, refreshTime.milliseconds);
-				}
-			}
+  // Get guard time. `date` is a Luxon DateTime object.
+  const getGuardTime = (date, action) => {
+    let time;
 
-			// Is it after sundown on Saturday?
-			if (afterSabbath) {
+    if (action == "closing") {
+      time = date.minus(getGuardDuration());
+    }
 
-			}
+    if (action == "opening") {
+      time = date.plus(getGuardDuration());
+    }
 
-			if (options.debug) {
+    return time;
+  };
 
-				let checks = {
-					Enabled: {
-						"Preparation day": preparationDay,
-						"Banner up": bannerUp,
-						"During the Sabbath": duringSabbath,
-						"After Sabbath": afterSabbath
-					}
-				}
-	
-				console.group(`Sunset to Sunset time checks`)
-				console.table(checks)
-				console.groupEnd()
-	
-				times['Banner up'] = {
-					'Date': getMessageTime(closing).toLocaleString(DateTime.DATE_FULL),
-					'Time': getMessageTime(closing).toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
-				}
-	
-				times['Closing guard'] = {
-					'Date': closing.toLocaleString(DateTime.DATE_FULL),
-					'Time': closing.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
-				}
-	
-				times['Closing sunset'] = {
-					'Date': closingSunset.toLocaleString(DateTime.DATE_FULL),
-					'Time': closingSunset.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
-				}
-	
-				times['Opening sunset'] = {
-					'Date': openingSunset.toLocaleString(DateTime.DATE_FULL),
-					'Time': openingSunset.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
-				}
-	
-				times['Opening guard'] = {
-					'Date': opening.toLocaleString(DateTime.DATE_FULL),
-					'Time': opening.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
-				}
+  const getTimes = async () => {
+    const allTimes = Promise.all([getClosingSunset(), getOpeningSunset()]);
 
-				console.group(`Sunset to Sunset times`)
-				console.table(times)
-				console.groupEnd()
-		
-			}
-		})
-	} else {
-		console.log('Sunset to Sunset: Exiting because today is not closing day')
-	}
+    const times = await allTimes;
 
-	return options
-})()
+    return times;
+  };
+
+  // Only run if today is Friday or Sabbath
+  if (activateSunsetWatch || options.simulateTime) {
+    let preparationDay = false;
+    let bannerUp = false;
+    let duringSabbath = false;
+    let afterSabbath = false;
+
+    // Check if we are simulating the time
+    if (options.simulateTime) {
+      switch (options.simulateTime) {
+        case "preparation-day":
+          preparationDay = true;
+          break;
+
+        case "banner-up":
+          bannerUp = true;
+          break;
+
+        case "during-sabbath":
+          duringSabbath = true;
+          break;
+
+        case "after-sabbath":
+          afterSabbath = true;
+          break;
+
+        default:
+          break;
+      }
+    }
+
+    getTimes().then(([closingSunset, openingSunset]) => {
+      // Set guard times
+      const closing = getGuardTime(closingSunset, "closing");
+      const opening = getGuardTime(openingSunset, "opening");
+
+      if (!options.simulateTime) {
+        // Set time checks
+        preparationDay = now < getMessageTime(closing);
+        bannerUp = now > getMessageTime(closing) && now < closing;
+        duringSabbath =
+          now >= closing &&
+          now <= opening &&
+          now.weekday >= getClosingDayNumber();
+        afterSabbath = now > opening && now >= getOpeningDayNumber();
+      }
+
+      // Is is during the week before the time to show the banner?
+      if (preparationDay) {
+        // Refresh the page when it's time to show the banner.
+        const refreshTime = getMessageTime(closing)
+          .diff(now, "milliseconds")
+          .toObject();
+
+        // Don't refresh if there is a negative refresh time.
+        // This conditional is mainly here for when `simulateTime`
+        // is set to `preparation-day`.
+        if (refreshTime.milliseconds >= 0) {
+          setTimeout(() => {
+            location.reload();
+          }, refreshTime.milliseconds);
+        }
+      }
+
+      // Is it before closing time but the banner should be up?
+      if (bannerUp) {
+        renderBanner(closing, opening);
+
+        // Refresh the page when it's closing time.
+        const refreshTime = closing.diff(now, "milliseconds").toObject();
+
+        // Don't refresh if there is a negative refresh time.
+        // This conditional is mainly here for when `simulateTime`
+        // is set to `banner-up`.
+        if (refreshTime.milliseconds >= 0) {
+          setTimeout(() => {
+            location.reload();
+          }, refreshTime.milliseconds);
+        }
+      }
+
+      // Is it during the sabbath?
+      if (duringSabbath) {
+        renderMessage(opening);
+
+        // Refresh the page when it's opening time.
+        const refreshTime = opening.diff(now, "milliseconds").toObject();
+
+        if (refreshTime.milliseconds >= 0) {
+          setTimeout(() => {
+            location.reload();
+          }, refreshTime.milliseconds);
+        }
+      }
+
+      // Is it after sundown on Saturday?
+      if (afterSabbath) {
+      }
+
+      if (options.debug) {
+        let checks = {
+          Enabled: {
+            "Preparation day": preparationDay,
+            "Banner up": bannerUp,
+            "During the Sabbath": duringSabbath,
+            "After Sabbath": afterSabbath,
+          },
+        };
+
+        console.group(`Sunset to Sunset time checks`);
+        console.table(checks);
+        console.groupEnd();
+
+        times["Banner up"] = {
+          Date: getMessageTime(closing).toLocaleString(DateTime.DATE_FULL),
+          Time: getMessageTime(closing).toLocaleString(
+            DateTime.TIME_WITH_SHORT_OFFSET
+          ),
+        };
+
+        times["Closing guard"] = {
+          Date: closing.toLocaleString(DateTime.DATE_FULL),
+          Time: closing.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
+        };
+
+        times["Closing sunset"] = {
+          Date: closingSunset.toLocaleString(DateTime.DATE_FULL),
+          Time: closingSunset.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
+        };
+
+        times["Opening sunset"] = {
+          Date: openingSunset.toLocaleString(DateTime.DATE_FULL),
+          Time: openingSunset.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
+        };
+
+        times["Opening guard"] = {
+          Date: opening.toLocaleString(DateTime.DATE_FULL),
+          Time: opening.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET),
+        };
+
+        console.group(`Sunset to Sunset times`);
+        console.table(times);
+        console.groupEnd();
+      }
+    });
+  } else {
+    console.log("Sunset to Sunset: Exiting because today is not closing day");
+  }
+
+  return options;
+})();
