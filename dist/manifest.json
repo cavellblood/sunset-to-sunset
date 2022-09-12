@@ -1,7 +1,7 @@
 {
-  "js/sunset-to-sunset-legacy.js": {
+  "js/sunset-to-sunset-legacy.ts": {
     "file": "assets/sunset-to-sunset-legacy.min.js",
-    "src": "js/sunset-to-sunset-legacy.js",
+    "src": "js/sunset-to-sunset-legacy.ts",
     "isEntry": true
   },
   "tests/index-legacy.html": {
@@ -9,17 +9,17 @@
     "src": "tests/index-legacy.html",
     "isEntry": true,
     "imports": [
-      "js/sunset-to-sunset-legacy.js"
+      "js/sunset-to-sunset-legacy.ts"
     ]
   },
-  "../vite/legacy-polyfills": {
-    "file": "assets/polyfills-legacy.53eda98a.js",
-    "src": "../vite/legacy-polyfills",
+  "../vite/legacy-polyfills-legacy": {
+    "file": "assets/polyfills-legacy.min.js",
+    "src": "../vite/legacy-polyfills-legacy",
     "isEntry": true
   },
-  "js/sunset-to-sunset.js": {
+  "js/sunset-to-sunset.ts": {
     "file": "assets/sunset-to-sunset.min.js",
-    "src": "js/sunset-to-sunset.js",
+    "src": "js/sunset-to-sunset.ts",
     "isEntry": true,
     "css": [
       "assets/sunset-to-sunset.css"
@@ -30,10 +30,18 @@
     "src": "tests/index.html",
     "isEntry": true,
     "imports": [
-      "js/sunset-to-sunset.js"
+      "js/sunset-to-sunset.ts"
     ],
     "css": [
-      "assets/test.css"
+      "assets/index.css"
     ]
+  },
+  "js/sunset-to-sunset.css": {
+    "file": "assets/sunset-to-sunset.css",
+    "src": "js/sunset-to-sunset.css"
+  },
+  "tests/index.css": {
+    "file": "assets/index.css",
+    "src": "tests/index.css"
   }
 }

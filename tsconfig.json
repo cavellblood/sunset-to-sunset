@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node16",
+    "skipLibCheck": true,
+  },
+  "exclude": ["node_modules", "dist"],
+  "include": ["**/*.ts", "**/*.tsx"]
+}
