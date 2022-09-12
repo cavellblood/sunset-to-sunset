@@ -4,11 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sunset to Sunset Test</title>
-    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../src/css/reset.css" />
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
 
-    <script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js"></script>
-    <script type="module" src="../js/sunset-to-sunset.js"></script>
+    <script type="module" src="../src/js/sunset-to-sunset.ts"></script>
   </head>
 
   <body>
@@ -1174,7 +1173,7 @@
         </footer>
       </div>
     </div>
-    <template
+    <div
       id="sts-settings"
       data-settings='{
 			"location": {
@@ -1193,8 +1192,15 @@
 			"simulateTime": "banner-up"
 		}'
       data-days='{ "closing": "1", "opening": "2" }'
-    >
-    </template>
+    ></div>
+    <div id="sts-banner-template">
+      <div class="sts-banner YOUR-CUSTOM-CLASSES-HERE">
+        Our store will be closing at
+        <span class="sts-closing-time"></span>
+        <span>and will re-open on</span>
+        <span class="sts-opening-time"></span>
+      </div>
+    </div>
     <template id="sts-banner-template-">
       <div class="sts-banner">
         Our store will be closing at
