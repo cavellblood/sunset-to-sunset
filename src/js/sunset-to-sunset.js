@@ -17,11 +17,11 @@ const renderBanner = (closing, opening) => {
     let defaultBannerTemplate = document.createElement("template");
 
     defaultBannerTemplate.innerHTML = `
-			<div class="sts-banner">
-				Because of religious beliefs our store will be closed over the Sabbath hours.
-				Closing on <span class="sts-closing-time"></span> and will re-open on <span class="sts-opening-time"></span>.
-			</div>
-		`;
+      <div class="sts-banner">
+        Because of religious beliefs our store will be closed over the Sabbath hours.
+        Closing on <span class="sts-closing-time"></span> and will re-open on <span class="sts-opening-time"></span>.
+      </div>
+    `;
     template = defaultBannerTemplate;
   }
 
@@ -58,36 +58,36 @@ const renderMessage = (opening) => {
   } else {
     let messageHolder = document.createElement("div");
     messageHolder.innerHTML = `
-			<p>
-				In a world that seems to be spinning faster every day, we choose to stop 
-				and rest every Sabbath (Saturday). It’s a day for us to relax, refresh, 
-				refocus and worship; worship a God who loved us so much that He built a 
-				day of rest into Creation week and then commanded us to keep it 
-				(knowing we probably wouldn’t do it otherwise—even though it is for 
-				our best good).
-			</p>
-		`;
+      <p>
+        In a world that seems to be spinning faster every day, we choose to stop 
+        and rest every Sabbath (Saturday). It’s a day for us to relax, refresh, 
+        refocus and worship; worship a God who loved us so much that He built a 
+        day of rest into Creation week and then commanded us to keep it 
+        (knowing we probably wouldn’t do it otherwise—even though it is for 
+        our best good).
+      </p>
+    `;
 
     message = messageHolder;
   }
 
   let template = document.createElement("template");
   template.innerHTML = `
-		<div class="sts-full-message__container">
+    <div class="sts-full-message__container">
 
-			<div class="sts-layout  sts-modal">
-				<div class="sts-layout__item  sts-message-area  relative">
-					<h1 class="sts-full-message__heading">Sabbath</h1>
-				</div>
-				<div class="sts-layout__item  sts-time-area">
-					<p>
-						We will re-open on <strong><span class="sts-opening-time"></span>.</strong>
-					</p>
-				</div>
-			</div>
-		
-		</div>
-	`;
+      <div class="sts-layout  sts-modal">
+        <div class="sts-layout__item  sts-message-area  relative">
+          <h1 class="sts-full-message__heading">Sabbath</h1>
+        </div>
+        <div class="sts-layout__item  sts-time-area">
+          <p>
+            We will re-open on <strong><span class="sts-opening-time"></span>.</strong>
+          </p>
+        </div>
+      </div>
+    
+    </div>
+  `;
 
   const messageTemplate = template.content.cloneNode(true);
 
