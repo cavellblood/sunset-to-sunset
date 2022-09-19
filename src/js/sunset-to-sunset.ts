@@ -10,7 +10,7 @@ const renderBanner = (closing, opening) => {
     if (userDefinedTemplate) {
       template = userDefinedTemplate;
     } else {
-      let defaultBannerTemplate = document.createElement("template");
+      let defaultBannerTemplate = document.createElement("div");
 
       defaultBannerTemplate.innerHTML = `
         <div class="sts-banner">
@@ -21,7 +21,7 @@ const renderBanner = (closing, opening) => {
       template = defaultBannerTemplate;
     }
 
-    const banner = template.cloneNode(true);
+    const banner = template.firstElementChild.cloneNode(true);
 
     // Find all closing elements and add formatted times
     const closingElements = banner.querySelectorAll(".sts-closing-time");
@@ -49,7 +49,7 @@ const renderMessage = (opening) => {
     let message;
 
     if (userDefinedTemplate) {
-      message = userDefinedTemplate.content.cloneNode(true);
+      message = userDefinedTemplate.firstElementChild.cloneNode(true);
       message = message.firstElementChild;
     } else {
       let messageHolder = document.createElement("div");
@@ -67,7 +67,7 @@ const renderMessage = (opening) => {
       message = messageHolder;
     }
 
-    let template = document.createElement("template");
+    let template = document.createElement("div");
     template.innerHTML = `
       <div class="sts-full-message__container">
   
@@ -85,7 +85,7 @@ const renderMessage = (opening) => {
       </div>
     `;
 
-    const messageTemplate = template.content.cloneNode(true);
+    const messageTemplate = template.firstElementChild.cloneNode(true);
 
     if (userFullTemplate) {
       let messageContainer = messageTemplate.querySelector(
