@@ -87,7 +87,7 @@ const renderMessage = (opening) => {
 
     const messageTemplate = template.firstElementChild.cloneNode(true);
 
-    if (userFullTemplate) {
+    if (userDefinedTemplate) {
       let messageContainer = messageTemplate.querySelector(
         ".sts-full-message__container"
       );
@@ -97,7 +97,7 @@ const renderMessage = (opening) => {
       }
 
       messageContainer.insertBefore(message, null);
-    } else if (userSimpleTemplate) {
+    } else {
       const messageArea = messageTemplate.querySelector(".sts-message-area");
       messageArea.insertBefore(message, null);
     }
