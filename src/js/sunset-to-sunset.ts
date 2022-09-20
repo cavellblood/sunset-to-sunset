@@ -50,7 +50,7 @@ const renderMessage = (opening) => {
 
     if (userDefinedTemplate) {
       message = userDefinedTemplate.firstElementChild.cloneNode(true);
-      message = message.firstElementChild;
+      message = message;
     } else {
       let messageHolder = document.createElement("div");
       messageHolder.innerHTML = `
@@ -67,8 +67,16 @@ const renderMessage = (opening) => {
       message = messageHolder;
     }
 
-    let template = document.createElement("div");
-    template.innerHTML = `
+    let messageTemplate;
+
+    if (userFullTemplate) {
+      messageTemplate = document.createElement("div");
+      messageTemplate.classList.add("sts-full-message__container");
+
+      messageTemplate.insertBefore(message, null);
+    } else if (userSimpleTemplate) {
+      let template = document.createElement("div");
+      template.innerHTML = `
       <div class="sts-full-message__container">
   
         <div class="sts-layout  sts-modal">
@@ -85,19 +93,8 @@ const renderMessage = (opening) => {
       </div>
     `;
 
-    const messageTemplate = template.firstElementChild.cloneNode(true);
+      messageTemplate = template.firstElementChild.cloneNode(true);
 
-    if (userDefinedTemplate) {
-      let messageContainer = messageTemplate.querySelector(
-        ".sts-full-message__container"
-      );
-
-      while (messageContainer.firstElementChild) {
-        messageContainer.removeChild(messageContainer.firstChild);
-      }
-
-      messageContainer.insertBefore(message, null);
-    } else {
       const messageArea = messageTemplate.querySelector(".sts-message-area");
       messageArea.insertBefore(message, null);
     }
