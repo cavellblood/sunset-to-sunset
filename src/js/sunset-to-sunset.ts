@@ -100,6 +100,8 @@ const renderMessage = (opening) => {
     }
 
     const html = document.getElementsByTagName("html")[0];
+
+    // Add class to prevent scrolling the page
     html.classList.add("sts-during-sabbath");
 
     // Find all opening elements and add formatted times
