@@ -5,9 +5,6 @@ This script was developed to help with closing down of a website from sunset on 
 - Automatically show a banner on the top of your site notifying visitors when your site will close.
 - Show a message during the Sabbath hours letting visitors know why you are closed and when your site will be back online.
 
-## Dependencies
-The Sunset to Sunset script is dependent on a date time library called [Luxon](https://moment.github.io/luxon/#/) to calculate closing and opening times based off of the sunset times at the location that is entered. A goal is to eventually include this in the Sunset to Sunset script to avoid the need to load two separate scripts.
-
 ## Installation
 Whichever method you choose, either **Download** or **CDN**, it’s best to include all these files in the head so that they load right away. It’s not ideal to have render-blocking scripts in the head but the reason we recommend putting them in the head is to avoid the flash of the rendered page before the Sabbath message gets rendered. Feel free to submit a PR for improved installation methods.
 
@@ -86,12 +83,23 @@ Link directly to the Sunset to Sunset files on [unpkg](https://unpkg.com/).
 <body>
 ```
 
+### Support for Safari 10.1
+Safari 10.1 supports modules, but does not support the `nomodule` attribute - it will load `<script nomodule>` anyway. If you need to support Safari 10.1 on your website you may use this snippet below:
+
+```html
+<!-- Safari 10.1 `nomodule` fix script (https://gist.github.com/samthor/64b114e4a4f539915a95b91ffd340acc) -->
+<!-- This can be omitted if you don't have many users of Safari 10.1 in your target audience. -->
+<script>
+  !function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()},!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();
+</script>
+```
+
 
 ## Usage
 Sunset to sunset needs some initial configuration needed for it to work correctly for your location. It will work out of the box without configuration but it won't be for your location.
 
 ## Custom Templates
-Sunset to sunset has some built-in banner and message templates that will be shown at the appropriate times but sometimes you need to define your own wording. You can do that with the html `template` elements.
+Sunset to sunset has some built-in banner and message templates that will be shown at the appropriate times but sometimes you need to define your own wording. You can do that with `<div>`s with the appropriate `id`s added to to them.
 
 ### Special Template Tags
 You can add the following two tags to your custom templates to render the closing time and the opening times.
@@ -148,35 +156,48 @@ Include the [special closing and opening time tags](#special-template-tags) with
 ### Banner Template
 To define your custom banner template add the following snippet to your page, preferrably in the `<head>` tag.
 
+
 ``` html
-<template id="sts-banner-template">
+<div id="sts-banner-template">
   <div class="sts-banner  YOUR-CUSTOM-CLASSES-HERE">
     Our store will be closing at 
     <span class="sts-closing-time"></span>
     <span>and will re-open on</span>
     <span class="sts-opening-time"></span>
   </div>
-</template>
+</div>
 ```
+The `sts-banner` class provides some default styling for the banner that you could use as a starting point. Or you can remove it altogether and use your own custom styles. If you keep the `sts-banner` class it will output something like what you see below:
+
+![banner screenshot](src/screenshots/banner.png)
 
 ### Simple Message Template
 If you want to just set a paragraph or two of text to appear during Sabbath then this is the template you'll want to use. 
 
 To define your custom message template add the following snippet to your page, preferrably in the `<head>` tag:
 ``` html
-<template id="sts-message-template">
+<div id="sts-message-template">
   <p>
     Your message here
   </p>
-</template>
+</div>
 ```
 
+It will output something like what you see below:
+
+![simple custom message template screenshot](src/screenshots/simple-custom-message.png)
+
+If you supply no custom template then a default message will be set which looks like this:
+
+![simple message template screenshot](src/screenshots/simple-default-message.png)
+
+
 ### Full Message Template
-If you want to have full control over the appearance and layout of the message then you'll want to use the full message template. Everything inside of this template will be output into the `<div class="sts-full-message__container">`. You will need to supply your own custom styling to add padding and centering of your message.
+If you want to have full control over the appearance and layout of the message then you'll want to use the full message template. You will need to supply your own custom styling to add padding and centering of your message.
 
 To define your custom message template add the following snippet to your page, preferrably in the `<head>` tag:
 ``` html
-<template id="sts-full-message-template">
+<div id="sts-full-message-template">
   <div class="your-custom-layout-class">
     <div class="your-message-area">
       <h1 class="your-message__heading">Sabbath</h1>
@@ -188,7 +209,7 @@ To define your custom message template add the following snippet to your page, p
       </p>
     </div>
   </div>
-</template>
+</div>
 ```
 
 ## Defining the Settings
