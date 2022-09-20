@@ -10,7 +10,7 @@ const renderBanner = (closing, opening) => {
     if (userDefinedTemplate) {
       template = userDefinedTemplate;
     } else {
-      let defaultBannerTemplate = document.createElement("template");
+      let defaultBannerTemplate = document.createElement("div");
 
       defaultBannerTemplate.innerHTML = `
         <div class="sts-banner">
@@ -21,7 +21,7 @@ const renderBanner = (closing, opening) => {
       template = defaultBannerTemplate;
     }
 
-    const banner = template.cloneNode(true);
+    const banner = template.firstElementChild.cloneNode(true);
 
     // Find all closing elements and add formatted times
     const closingElements = banner.querySelectorAll(".sts-closing-time");
@@ -49,8 +49,8 @@ const renderMessage = (opening) => {
     let message;
 
     if (userDefinedTemplate) {
-      message = userDefinedTemplate.content.cloneNode(true);
-      message = message.firstElementChild;
+      message = userDefinedTemplate.firstElementChild.cloneNode(true);
+      message = message;
     } else {
       let messageHolder = document.createElement("div");
       messageHolder.innerHTML = `
@@ -67,8 +67,16 @@ const renderMessage = (opening) => {
       message = messageHolder;
     }
 
-    let template = document.createElement("template");
-    template.innerHTML = `
+    let messageTemplate;
+
+    if (userFullTemplate) {
+      messageTemplate = document.createElement("div");
+      messageTemplate.classList.add("sts-full-message__container");
+
+      messageTemplate.insertBefore(message, null);
+    } else {
+      let template = document.createElement("div");
+      template.innerHTML = `
       <div class="sts-full-message__container">
   
         <div class="sts-layout  sts-modal">
@@ -85,24 +93,15 @@ const renderMessage = (opening) => {
       </div>
     `;
 
-    const messageTemplate = template.content.cloneNode(true);
+      messageTemplate = template.firstElementChild.cloneNode(true);
 
-    if (userFullTemplate) {
-      let messageContainer = messageTemplate.querySelector(
-        ".sts-full-message__container"
-      );
-
-      while (messageContainer.firstElementChild) {
-        messageContainer.removeChild(messageContainer.firstChild);
-      }
-
-      messageContainer.insertBefore(message, null);
-    } else if (userSimpleTemplate) {
       const messageArea = messageTemplate.querySelector(".sts-message-area");
       messageArea.insertBefore(message, null);
     }
 
     const html = document.getElementsByTagName("html")[0];
+
+    // Add class to prevent scrolling the page
     html.classList.add("sts-during-sabbath");
 
     // Find all opening elements and add formatted times

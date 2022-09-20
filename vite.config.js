@@ -7,11 +7,10 @@ export default ({ command }) => ({
   build: {
     emptyOutDir: true,
     manifest: true,
-    outDir: "../dist/",
     rollupOptions: {
       input: {
-        "sunset-to-sunset": "./src/js/sunset-to-sunset.ts",
-        test: "./src/tests/index.html",
+        "sunset-to-sunset": "./src/tests/index.html",
+        style: "./src/css/style.css",
       },
       output: {
         sourcemap: true,
