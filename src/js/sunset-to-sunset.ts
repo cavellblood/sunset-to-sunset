@@ -74,7 +74,7 @@ const renderMessage = (opening) => {
       messageTemplate.classList.add("sts-full-message__container");
 
       messageTemplate.insertBefore(message, null);
-    } else if (userSimpleTemplate) {
+    } else {
       let template = document.createElement("div");
       template.innerHTML = `
       <div class="sts-full-message__container">
