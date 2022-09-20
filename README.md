@@ -10,12 +10,11 @@ Whichever method you choose, either **Download** or **CDN**, it’s best to incl
 
 ### Download
 - **CSS**
-  - [sunset-to-sunset.css](https://unpkg.com/sunset-to-sunset@1.0.6/dist/assets/sunset-to-sunset.css), minified
+  - [style.css](https://unpkg.com/sunset-to-sunset@1.0.7/dist/assets/style.css), minified
 - **Javascript**
-  - [luxon.min.js](https://cdn.jsdelivr.net/npm/luxon@3.0.3/build/global/luxon.min.js), minified library for working with dates and times in JavaScript.
-  - [polyfills-legacy.53eda98a.js](https://unpkg.com/sunset-to-sunset@1.0.6/dist/assets/polyfills-legacy.53eda98a.js), legacy bundle for outdated browser support.
-  - [sunset-to-sunset.min.js](https://unpkg.com/sunset-to-sunset@1.0.6/dist/assets/sunset-to-sunset.min.js), minified
-  - [sunset-to-sunset-legacy.min.js](https://unpkg.com/sunset-to-sunset@1.0.6/dist/assets/sunset-to-sunset-legacy.min.js), minified for legacy browsers
+  - [polyfills-legacy.min.js](https://unpkg.com/sunset-to-sunset@1.0.7/dist/assets/polyfills-legacy.min.js), legacy bundle for outdated browser support.
+  - [sunset-to-sunset.min.js](https://unpkg.com/sunset-to-sunset@1.0.7/dist/assets/sunset-to-sunset.min.js), minified
+  - [sunset-to-sunset-legacy.min.js](https://unpkg.com/sunset-to-sunset@1.0.7/dist/assets/sunset-to-sunset-legacy.min.js), minified for legacy browsers
 
 ``` html
 <!DOCTYPE html>
@@ -24,27 +23,19 @@ Whichever method you choose, either **Download** or **CDN**, it’s best to incl
 <head>
   <!-- ... -->
 
-  <!-- Luxon library -->
-  <script src="YOUR/PATH/HERE/luxon.min.js"></script>
-  
-  <!-- Safari 10.1 `nomodule` fix script (https://gist.github.com/samthor/64b114e4a4f539915a95b91ffd340acc) -->
-  <!-- This can be omitted if you don't have many users of Safari 10.1 in your target audience. -->
-  <script>
-    !function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()},!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();
-  </script>
-
-  <!-- Legacy bundle for outdated browser support. -->
-  <script type="nomodule" src="YOUR/PATH/HERE/polyfills-legacy.53eda98a.js"></script>
-
   <!-- Sunset to Sunset javascript -->
   <script type="module" src="YOUR/PATH/HERE/sunset-to-sunset.min.js" crossorigin></script>
 
   <!-- Sunset to Sunset stylesheet -->
-  <link href="YOUR/PATH/HERE/sunset-to-sunset.css" rel="stylesheet" media="print" onload="this.media='all'">
+  <link href="YOUR/PATH/HERE/style.css" rel="stylesheet" media="print" onload="this.media='all'">
+
+  <!-- Legacy bundle for outdated browser support. -->
+  <script type="nomodule" src="YOUR/PATH/HERE/polyfills-legacy.min.js"></script>
   
   <!-- Sunset to Sunset javascript for legacy browsers -->
   <script type="nomodule" src="YOUR/PATH/HERE/sunset-to-sunset-legacy.min.js"></script>
-  </head>
+
+</head>
 
 <body>
 ```
@@ -58,27 +49,40 @@ Link directly to the Sunset to Sunset files on [unpkg](https://unpkg.com/).
 <head>
   <!-- ... -->
 
-  <!-- Luxon library -->
-  <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.3/build/global/luxon.min.js"></script>
-  
-  <!-- Safari 10.1 `nomodule` fix script (https://gist.github.com/samthor/64b114e4a4f539915a95b91ffd340acc) -->
-  <!-- This can be omitted if you don't have many users of Safari 10.1 in your target audience. -->
-  <script>
-    !function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()},!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();
-  </script>
-
-  <!-- Legacy bundle for outdated browser support. -->
-  <script type="nomodule" src="https://unpkg.com/sunset-to-sunset@1.0.6/dist/assets/polyfills-legacy.53eda98a.js"></script>
-
   <!-- Sunset to Sunset javascript -->
-  <script type="module" src="https://unpkg.com/sunset-to-sunset@1.0.6/dist/assets/sunset-to-sunset.min.js" crossorigin></script>
+  <script
+    type="module"
+    src="https://unpkg.com/sunset-to-sunset@1.0.7/dist/assets/sunset-to-sunset.min.js"
+    crossOrigin="true"
+  ></script>
 
   <!-- Sunset to Sunset stylesheet -->
-  <link href="https://unpkg.com/sunset-to-sunset@1.0.6/dist/assets/sunset-to-sunset.css" rel="stylesheet" media="print" onload="this.media='all'">
-  
+  <link
+    href="https://unpkg.com/sunset-to-sunset@1.0.7/dist/assets/style.css"
+    rel="stylesheet"
+  />
+
+  <!-- Legacy bundle for outdated browser support. -->
+  <script
+    noModule
+    crossOrigin="true"
+    id="vite-legacy-polyfill"
+    src="https://unpkg.com/sunset-to-sunset@1.0.7/dist/assets/polyfills-legacy.min.js"
+  ></script>
+
   <!-- Sunset to Sunset javascript for legacy browsers -->
-  <script type="nomodule" src="https://unpkg.com/sunset-to-sunset@1.0.6/dist/assets/sunset-to-sunset-legacy.min.js"></script>
-  </head>
+  <script
+    noModule
+    crossOrigin="true"
+    id="vite-legacy-entry"
+    data-src="https://unpkg.com/sunset-to-sunset@1.0.7/dist/assets/sunset-to-sunset-legacy.min.js"
+  >
+    System.import(
+    document.getElementById('vite-legacy-entry').getAttribute('data-src'),
+    );
+  </script>
+
+</head>
 
 <body>
 ```
