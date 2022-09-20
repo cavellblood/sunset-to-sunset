@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sunset to Sunset Test</title>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+
+    
+    <style>
+      .test-container {
+        height: 100vh;
+      }
+
+      .bg-red {
+        background-color: red;
+      }
+
+      .bg-blue {
+        background-color: blue;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/sunset-to-sunset.min.js"></script>
+    <link rel="stylesheet" href="/assets/style.css">
+    <script type="module">try{import.meta.url;import("_").catch(()=>1);}catch(e){}window.__vite_is_modern_browser=true;</script>
+    <script type="module">!function(){if(window.__vite_is_modern_browser)return;console.warn("vite: loading legacy build because dynamic import or import.meta.url is unsupported, syntax error above should be ignored");var e=document.getElementById("vite-legacy-polyfill"),n=document.createElement("script");n.src=e.src,n.onload=function(){System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))},document.body.appendChild(n)}();</script>
+  </head>
+
+  <body>
+    <div class="test-container bg-red"></div>
+    <div class="test-container bg-blue"></div>
+    <div class="test-container"></div>
+    <div
+      id="sts-settings"
+      data-settings='{
+			"location": {
+				"lat": "35.76893917474924",
+				"long": "-87.48950029440782"
+			},
+			"bannerDuration": {
+				"hours": "0",
+				"minutes": "180"
+			},
+			"guardDuration": {
+				"hours": "0",
+				"minutes": "90"
+			},
+			"debug": true,
+			"simulateTime": "banner-up"
+		}'
+      data-days='{ "closing": "5", "opening": "6" }'
+    ></div>
+    <div id="sts-banner-template-" class="hidden">
+      <div class="sts-banner YOUR-CUSTOM-CLASSES-HERE">
+        Our store will be closing at
+        <span class="sts-closing-time"></span>
+        <span>and will re-open on</span>
+        <span class="sts-opening-time"></span>
+      </div>
+    </div>
+    <div id="sts-banner-template-" class="hidden">
+      <div class="sts-banner">
+        Our store will be closing at
+        <ul>
+          <li>Default Formatting: <span class="sts-closing-time"></span></li>
+          <li>
+            User-defined Locale:
+            <span
+              class="sts-closing-time"
+              data-format-locale='{ 
+						"hour": "numeric",
+						"minute": "numeric",
+						"timeZoneName": "short"
+					}'
+            ></span>
+          </li>
+          <li>
+            User-defined Token:
+            <span
+              class="sts-closing-time"
+              data-format-token="cccc 'at' h:mm a ZZZZ"
+            ></span>
+          </li>
+          <li>
+            User-defined Locale and Token (token wins):
+            <span
+              class="sts-closing-time"
+              data-format-locale='{ 
+						"hour": "numeric",
+						"minute": "numeric",
+						"timeZoneName": "short"
+					}'
+              data-format-token="LLLL d 'at' h:mm a ZZZZ"
+            ></span>
+          </li>
+        </ul>
+
+        <span>and will re-open on</span>
+
+        <ul>
+          <li>Default Formatting: <span class="sts-opening-time"></span></li>
+          <li>
+            User-defined Locale:
+            <span
+              class="sts-opening-time"
+              data-format-locale='{ 
+						"hour": "numeric",
+						"minute": "numeric",
+						"timeZoneName": "short"
+					}'
+            ></span>
+          </li>
+          <li>
+            User-defined Token:
+            <span
+              class="sts-opening-time"
+              data-format-token="cccc 'at' h:mm a ZZZZ"
+            ></span>
+          </li>
+          <li>
+            User-defined Locale and Token (token wins):
+            <span
+              class="sts-opening-time"
+              data-format-locale='{ 
+						"hour": "numeric",
+						"minute": "numeric",
+						"timeZoneName": "short"
+					}'
+              data-format-token="LLLL d 'at' h:mm a ZZZZ"
+            ></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="sts-message-template--" class="hidden">
+      <p>
+        In a world that seems to be spinning faster every day, we choose to stop
+        and rest every Sabbath (Saturday). It’s a day for us to relax, refresh,
+        refocus and worship; worship a God who loved us so much that He built a
+        day of rest into Creation week and then commanded us to keep it (knowing
+        we probably wouldn’t do it otherwise—even though it is for our best
+        good).
+        <a class="underline" href="https://www.adventist.org/the-sabbath/"
+          >Learn more about the Sabbath</a
+        >
+      </p>
+    </div>
+    <div id="sts-full-message-template--" class="hidden">
+      <div class="sts-full-message__container">
+        <div class="sts-layout sts-modal">
+          <div class="sts-layout__item sts-message-area relative">
+            <h1 class="sts-full-message__heading">Sabbath</h1>
+          </div>
+          <div class="sts-layout__item sts-time-area">
+            <p>
+              Hello We will re-open on
+              <strong><span class="sts-opening-time"></span>.</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="sts-full-message-template--" class="hidden">
+      <div class="your-custom-layout-class">
+        <div class="your-message-area">
+          <h1 class="your-message__heading">Sabbath</h1>
+          <p>Message here</p>
+        </div>
+        <div class="your-custom-time-area">
+          <p>
+            We will re-open on
+            <strong><span class="sts-opening-time"></span>.</strong>
+          </p>
+        </div>
+        <div style="background-color: orange; height: 100vh">
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur
+          illum quasi, nemo eum nam vero dolore amet ipsa, perferendis et quos
+          laudantium temporibus corrupti eveniet iure cumque ab, suscipit iste?
+        </div>
+        <div style="background-color: yellow; height: 100vh">
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur
+          illum quasi, nemo eum nam vero dolore amet ipsa, perferendis et quos
+          laudantium temporibus corrupti eveniet iure cumque ab, suscipit iste?
+        </div>
+      </div>
+    </div>
+    <script nomodule>!function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",(function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()}),!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();</script>
+    <script nomodule crossorigin id="vite-legacy-polyfill" src="/assets/polyfills-legacy.min.js"></script>
+    <script nomodule crossorigin id="vite-legacy-entry" data-src="/assets/sunset-to-sunset-legacy.min.js">System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))</script>
+  </body>
+</html>
