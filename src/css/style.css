@@ -22,7 +22,7 @@ html.sts-during-sabbath body {
 
 .sts-full-message__container {
   @apply inset-0;
-  @apply absolute;
+  @apply fixed;
   background-color: white;
   @apply pointer-events-auto;
   @apply overflow-y-scroll;
