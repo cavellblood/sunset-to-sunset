@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+### Changed
+- User-defined templates for the message that appears on Sabbath and the banner message no longer use the HTML `<template>` tag. They need to use any other element now, preferably a `<div>` but any element with the right `id` will work. This change was needed because of a conflict with using `<template>` in React apps as React expects it to be a JSX template and not the HTML `<template>` tag.
+
+## 1.0.6 - 2022-09-12
+### Changed
+- Luxon is now included in the build.
+- Updated dependencies.
+
 ## 1.0.5 - 2021-10-15
 ### Changed
 - Updated the test file settings to show a more syntax-safe JSON object.
